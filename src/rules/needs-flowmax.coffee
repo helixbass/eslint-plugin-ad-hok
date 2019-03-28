@@ -17,6 +17,7 @@ module.exports =
     Identifier: (node) ->
       return unless needsFlowMax node
       return if isInFlowMax()
+      return unless currentFlowOrFlowMaxCalls.length
       context.report node, "#{node.name}() only works with flowMax()"
 
     CallExpression: (node) ->

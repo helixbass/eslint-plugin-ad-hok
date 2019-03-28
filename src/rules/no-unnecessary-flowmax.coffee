@@ -16,7 +16,7 @@ module.exports =
 
     Identifier: (node) ->
       return unless needsFlowMax node
-      setUsed()
+      setUsed() if currentFlowMaxCalls.length
 
     CallExpression: (node) ->
       if isFlowMax node

@@ -61,6 +61,10 @@ tests =
         ({x}) => <div>{x}</div>
       )
     '''
+  ,
+    code: '''
+      import {renderNothing} from 'ad-hok'
+    '''
   ]
   invalid: [
     code: '''
