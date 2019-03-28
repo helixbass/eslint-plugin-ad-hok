@@ -20,7 +20,7 @@ tests =
   ,
     code: '''
       flowMax(
-        renderNothing()
+        renderNothing
       )
     '''
   ,
@@ -32,7 +32,7 @@ tests =
   ,
     code: '''
       flowMax(
-        branch(({x}) => x > 1, renderNothing()),
+        branch(({x}) => x > 1, renderNothing),
       )
     '''
   ,

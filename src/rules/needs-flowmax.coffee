@@ -11,6 +11,14 @@ module.exports =
   create: (context) ->
     currentFlowOrFlowMaxCalls = []
 
+    isInFlowMax = ->
+      currentFlowOrFlowMaxCalls.length and currentFlowOrFlowMaxCalls[currentFlowOrFlowMaxCalls.length - 1].isFlowMax
+
+    Identifier: (node) ->
+      return unless needsFlowMax node
+      return if isInFlowMax()
+      context.report node, "#{node.name}() only works with flowMax()"
+
     CallExpression: (node) ->
       if isFlowMax node
         currentFlowOrFlowMaxCalls.push {node, isFlowMax: yes}
@@ -20,7 +28,7 @@ module.exports =
         return
 
       return unless needsFlowMax node
-      return if currentFlowOrFlowMaxCalls.length and currentFlowOrFlowMaxCalls[currentFlowOrFlowMaxCalls.length - 1].isFlowMax
+      return if isInFlowMax()
       context.report node, "#{node.callee.name}() only works with flowMax()"
 
     'CallExpression:exit': (node) ->

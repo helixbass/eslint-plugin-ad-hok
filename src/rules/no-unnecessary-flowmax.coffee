@@ -11,6 +11,13 @@ module.exports =
   create: (context) ->
     currentFlowMaxCalls = []
 
+    setUsed = ->
+      currentFlowMaxCalls[currentFlowMaxCalls.length - 1].used = yes
+
+    Identifier: (node) ->
+      return unless needsFlowMax node
+      setUsed()
+
     CallExpression: (node) ->
       if isFlowMax node
         currentFlowMaxCalls.push {node}
@@ -18,7 +25,7 @@ module.exports =
 
       return unless currentFlowMaxCalls.length
       return unless needsFlowMax node
-      currentFlowMaxCalls[currentFlowMaxCalls.length - 1].used = yes
+      setUsed()
 
     'CallExpression:exit': (node) ->
       return unless isFlowMax node

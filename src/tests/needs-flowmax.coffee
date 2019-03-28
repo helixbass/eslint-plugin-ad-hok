@@ -26,7 +26,7 @@ tests =
   ,
     code: '''
       flowMax(
-        renderNothing()
+        renderNothing
       )
     '''
   ,
@@ -44,7 +44,7 @@ tests =
   ,
     code: '''
       flowMax(
-        branch(({x}) => x > 1, renderNothing()),
+        branch(({x}) => x > 1, renderNothing),
       )
     '''
   ,
@@ -65,15 +65,15 @@ tests =
   invalid: [
     code: '''
       flow(
-        renderNothing()
+        renderNothing
       )
     '''
     errors: [error 'renderNothing']
   ,
     code: '''
-      renderNothing()
+      returns(1)
     '''
-    errors: [error 'renderNothing']
+    errors: [error 'returns']
   ,
     code: '''
       flow(
@@ -84,7 +84,7 @@ tests =
   ,
     code: '''
       flow(
-        branch(({x}) => x > 1, renderNothing()),
+        branch(({x}) => x > 1, renderNothing),
       )
     '''
     errors: [error 'renderNothing']
@@ -108,7 +108,7 @@ tests =
     code: '''
       flowMax(
         flow(
-          branch(({x}) => x > 1, renderNothing()),
+          branch(({x}) => x > 1, renderNothing),
         )
       )
     '''
