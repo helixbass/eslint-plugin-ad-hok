@@ -1,0 +1,40 @@
+{
+  "name": "eslint-plugin-ad-hok",
+  "version": "0.0.0-development",
+  "author": "Julian Rosse",
+  "description": "ESLint rules for the ad-hok library",
+  "main": "lib/index.js",
+  "scripts": {
+    "watch": "coffee -o lib/ -wc src/",
+    "build": "coffee -o lib/ -c src/",
+    "prepublish": "npm run build",
+    "test": "node_modules/mocha/bin/_mocha lib/tests/**/*.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/helixbass/eslint-plugin-ad-hok"
+  },
+  "homepage": "https://github.com/helixbass/eslint-plugin-ad-hok",
+  "bugs": "https://github.com/helixbass/eslint-plugin-ad-hok/issues",
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "eslintplugin"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "eslint": ">=4.14.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "coffeescript": "^2.3.2",
+    "eslint": "^5.13.0",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}
