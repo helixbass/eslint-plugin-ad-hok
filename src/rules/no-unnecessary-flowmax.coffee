@@ -1,9 +1,4 @@
-isFlowMax = ({callee}) ->
-  callee.type is 'Identifier' and callee.name is 'flowMax'
-
-needsFlowMax = ({callee}) ->
-  return no unless callee.type is 'Identifier'
-  callee.name in ['returns', 'renderNothing', 'addPropTypes']
+{isFlowMax, needsFlowMax} = require '../util'
 
 module.exports =
   meta:
