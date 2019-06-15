@@ -77,6 +77,12 @@ tests =
         returns(() => 1)
       )
     '''
+    # don't fix unless shouldFix is set
+    output: '''
+      flow(
+        returns(() => 1)
+      )
+    '''
     errors: [error 'returns']
   ,
     code: '''
@@ -157,6 +163,19 @@ tests =
       )
     '''
     errors: [error 'flowMax']
+  ,
+    code: '''
+      flow(
+        returns(() => 1)
+      )
+    '''
+    output: '''
+      flowMax(
+        returns(() => 1)
+      )
+    '''
+    errors: [error 'returns']
+    options: [shouldFix: yes]
   ]
 
 config =

@@ -37,4 +37,8 @@ isBranchPure = (node) ->
   return unless node?.callee?.type is 'Identifier'
   node.callee.name is 'branchPure'
 
-module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isBranchPure}
+getFlowToFlowMaxFixer = ({node, context}) ->
+  (fixer) ->
+    fixer.replaceText node.callee, 'flowMax'
+
+module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isBranchPure, getFlowToFlowMaxFixer}
