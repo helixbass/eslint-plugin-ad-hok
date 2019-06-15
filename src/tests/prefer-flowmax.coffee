@@ -57,6 +57,14 @@ tests =
       )
     '''
     options: ['whenUsingUnknownHelpers', whitelist: ['addSomethingNonmagic']]
+  ,
+    # helperRegex defaults to add.*
+    code: '''
+      flow(
+        something
+      )
+    '''
+    options: ['whenUsingUnknownHelpers']
   ]
   invalid: [
     # always
@@ -98,6 +106,15 @@ tests =
     '''
     errors: [error()]
     options: ['whenUsingUnknownHelpers']
+  ,
+    # helperRegex
+    code: '''
+      flow(
+        something
+      )
+    '''
+    errors: [error()]
+    options: ['whenUsingUnknownHelpers', {helperRegex: 'add.*|some.*'}]
   ,
     # nested flow()
     code: '''
