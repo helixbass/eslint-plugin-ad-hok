@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-ad-hok",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Julian Rosse",
   "description": "ESLint rules for the ad-hok library",
   "main": "lib/index.js",
