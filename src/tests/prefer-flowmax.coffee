@@ -65,6 +65,30 @@ tests =
       )
     '''
     options: ['whenUsingUnknownHelpers']
+  ,
+    # member expression isn't considered potentially magic
+    code: '''
+      flow(
+        something.else
+      )
+    '''
+    options: ['whenUsingUnknownHelpers']
+  ,
+    # immediately-invoked functions are ok
+    code: '''
+      flow(
+        (({x}) => doSomethingMagic(x))()
+      )
+    '''
+    options: ['whenUsingUnknownHelpers']
+  ,
+    # ternary is ok unless one of its branches is a helper
+    code: '''
+      flow(
+        y ? doSomething : x => x
+      )
+    '''
+    options: ['whenUsingUnknownHelpers']
   ]
   invalid: [
     # always
@@ -124,15 +148,6 @@ tests =
         )()
       )
     '''
-    errors: [error(), error()]
-    options: ['whenUsingUnknownHelpers']
-  ,
-    # immediately-invoked functions are not ok
-    code: '''
-      flow(
-        (({x}) => doSomethingMagic(x))()
-      )
-    '''
     errors: [error()]
     options: ['whenUsingUnknownHelpers']
   ,
@@ -149,6 +164,24 @@ tests =
     '''
     errors: [error()]
     options: ['always', shouldFix: yes]
+  ,
+    # ternary isn't ok if one of its branches is a helper
+    code: '''
+      flow(
+        y ? addSomething : x => x
+      )
+    '''
+    errors: [error()]
+    options: ['whenUsingUnknownHelpers']
+  ,
+    # ternary isn't ok if one of its branches is a helper
+    code: '''
+      flow(
+        y ? x => x : addSomething
+      )
+    '''
+    errors: [error()]
+    options: ['whenUsingUnknownHelpers']
   ]
 
 config =

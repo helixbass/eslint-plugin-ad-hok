@@ -27,11 +27,15 @@ module.exports =
     variant = context.options[0] ? 'always'
     {whitelist = [], shouldFix, helperRegex = 'add.*'} = context.options[1] ? {}
 
+    isWhitelisted = (name) ->
+      name in whitelist
+
     regexMatchingHelpers = new RegExp(helperRegex)
     isPotentiallyMagicCustomHelper = (argument) ->
       return no unless argument?
       name = argument.callee?.name ? argument.name
       return no unless name?
+      return no if isWhitelisted name
       regexMatchingHelpers.test name
 
     isHelper = (argument) ->
@@ -51,16 +55,13 @@ module.exports =
             null
       }
 
-    isWhitelisted = (argument) ->
-      return no unless argument?
-      argument.callee?.name in whitelist or argument.name in whitelist
-
     CallExpression: (node) ->
       return unless isFlow node
       if variant is 'always'
         return report node
 
       checkArgument = (argument) ->
+        return {} unless argument?
         # don't overlap with needs-flowmax
         if isMagic argument
           return shouldReturn: yes
@@ -71,14 +72,14 @@ module.exports =
               if shouldReturn
                 return shouldReturn: yes
           return {}
-        if isFunction argument
-          return {}
-        if isWhitelisted argument
-          return {}
-        if isHelper(argument) and not isPotentiallyMagicCustomHelper argument
-          return {}
-        report node
-        return shouldReturn: yes
+        if isPotentiallyMagicCustomHelper argument
+          report node
+          return shouldReturn: yes
+        if argument.type is 'ConditionalExpression'
+          if isPotentiallyMagicCustomHelper(argument.consequent) or isPotentiallyMagicCustomHelper(argument.alternate)
+            report node
+            return shouldReturn: yes
+        return {}
 
       for argument in node.arguments
         {shouldReturn} = checkArgument argument
