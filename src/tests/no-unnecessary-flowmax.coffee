@@ -20,25 +20,25 @@ tests =
   ,
     code: '''
       flowMax(
-        renderNothing
+        renderNothing()
       )
     '''
   ,
     code: '''
       flowMax(
-        returns(1)
+        returns(() => 1)
       )
     '''
   ,
     code: '''
       flowMax(
-        branch(({x}) => x > 1, renderNothing),
+        branch(({x}) => x > 1, renderNothing()),
       )
     '''
   ,
     code: '''
       flowMax(
-        branch(({x}) => x > 1, returns(3)),
+        branch(({x}) => x > 1, returns(() => 3)),
       )
     '''
   ,
@@ -53,6 +53,38 @@ tests =
     code: '''
       import {renderNothing} from 'ad-hok'
     '''
+  ,
+    # branch() is always magic
+    code: '''
+      flowMax(
+        branch(({x}) => x > 1, addProps({x: 3})),
+        ({x}) => <div>{x}</div>
+      )
+    '''
+  ,
+    # nested flowMax() is magic
+    code: '''
+      flowMax(
+        flowMax(addSomeStuff()),
+        ({x}) => <div>{x}</div>
+      )
+    '''
+  ,
+    # unknown call could be magic
+    code: '''
+      flowMax(
+        addSomeStuff(),
+        ({x}) => <div>{x}</div>
+      )
+    '''
+  ,
+    # unknown identifier could be magic
+    code: '''
+      flowMax(
+        addSomeStuff,
+        ({x}) => <div>{x}</div>
+      )
+    '''
   ]
   invalid: [
     code: '''
@@ -65,7 +97,7 @@ tests =
   ,
     code: '''
       flowMax(
-        branch(({x}) => x > 1, addProps({x: 3})),
+        branchPure(({x}) => x > 1, addProps({x: 3})),
         ({x}) => <div>{x}</div>
       )
     '''
