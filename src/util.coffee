@@ -1,8 +1,8 @@
-isFlowMax = ({callee}) ->
-  callee.type is 'Identifier' and callee.name is 'flowMax'
+isFlowMax = (node) ->
+  node?.callee?.type is 'Identifier' and node.callee.name is 'flowMax'
 
-isFlow = ({callee}) ->
-  callee.type is 'Identifier' and callee.name is 'flow'
+isFlow = (node) ->
+  node?.callee?.type is 'Identifier' and node.callee.name is 'flow'
 
 magicHelperNames = [
   'returns'
@@ -12,6 +12,11 @@ magicHelperNames = [
   'addWrapperHOC'
   'branch'
 ]
+
+isMagic = (node) ->
+  return yes if isFlowMax node
+  return unless node?.callee?.type is 'Identifier'
+  node.callee.name in magicHelperNames
 
 nonmagicHelperNames = [
   'addState'
@@ -25,13 +30,11 @@ nonmagicHelperNames = [
   'branchPure'
 ]
 
-needsFlowMax = ({callee, name}) ->
-  if callee?
-    return no unless callee.type is 'Identifier'
-    return callee.name in ['returns', 'addPropTypes']
-  name is 'renderNothing'
-
 isFunction = (node) ->
   node?.type in ['FunctionExpression', 'ArrowFunctionExpression']
 
-module.exports = {isFlowMax, isFlow, needsFlowMax, magicHelperNames, nonmagicHelperNames, isFunction}
+isBranchPure = (node) ->
+  return unless node?.callee?.type is 'Identifier'
+  node.callee.name is 'branchPure'
+
+module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isBranchPure}

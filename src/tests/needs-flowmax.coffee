@@ -26,79 +26,87 @@ tests =
   ,
     code: '''
       flowMax(
-        renderNothing
+        renderNothing()
       )
     '''
   ,
     code: '''
-      flowMax(
-        returns(1)
+      const addSomething = renderNothing()
+    '''
+  ,
+    code: '''
+      const addSomething = branch(
+        (({x}) => x, renderNothing())
       )
+    '''
+  ,
+    code: '''
+      const addSomething = addWrapper(
+        ({render}) => <>{render()}</>
+      )
+    '''
+  ,
+    code: '''
+      const addSomething = addWrapperHOC(
+        ({render}) => <>{render()}</>
+      )
+    '''
+  ,
+    code: '''
+      const addSomething = () => {
+        addPropTypes({x: PropTypes.string})
+      }
     '''
   ,
     code: '''
       flow(
-        branch(({x}) => x > 1, addProps({x: 3})),
+        branchPure(({x}) => x, a)
       )
-    '''
-  ,
-    code: '''
-      flowMax(
-        branch(({x}) => x > 1, renderNothing),
-      )
-    '''
-  ,
-    code: '''
-      flowMax(
-        branch(({x}) => x > 1, returns(3)),
-      )
-    '''
-  ,
-    code: '''
-      flowMax(
-        addProps({x: 1}),
-        addPropTypes({x: PropTypes.number.isRequired}),
-        ({x}) => <div>{x}</div>
-      )
-    '''
-  ,
-    code: '''
-      import {renderNothing} from 'ad-hok'
     '''
   ]
   invalid: [
     code: '''
       flow(
-        renderNothing
-      )
-    '''
-    errors: [error 'renderNothing']
-  ,
-    code: '''
-      returns(1)
-    '''
-    errors: [error 'returns']
-  ,
-    code: '''
-      flow(
-        returns(1)
-      )
-    '''
-    errors: [error 'returns']
-  ,
-    code: '''
-      flow(
-        branch(({x}) => x > 1, renderNothing),
+        renderNothing()
       )
     '''
     errors: [error 'renderNothing']
   ,
     code: '''
       flow(
-        branch(({x}) => x > 1, returns(3)),
+        returns(() => 1)
       )
     '''
     errors: [error 'returns']
+  ,
+    code: '''
+      flow(
+        branch(({x}) => x > 1, renderNothing()),
+      )
+    '''
+    errors: [error 'branch']
+  ,
+    code: '''
+      flow(
+        branch(({x}) => x > 1, returns(() => 3)),
+      )
+    '''
+    errors: [error 'branch']
+  ,
+    code: '''
+      flow(
+        branch(({x}) => x > 1, returns(() => 3)),
+      )
+    '''
+    errors: [error 'branch']
+  ,
+    # branch() is always magic
+    code: '''
+      flow(
+        branch(({x}) => x > 1, addProps({x: 3})),
+      )
+    '''
+    errors: [error 'branch']
   ,
     code: '''
       flow(
@@ -112,11 +120,43 @@ tests =
     code: '''
       flowMax(
         flow(
-          branch(({x}) => x > 1, renderNothing),
+          branch(({x}) => x > 1, renderNothing()),
         )
       )
     '''
-    errors: [error 'renderNothing']
+    errors: [error 'branch']
+  ,
+    # catch returns() inside branchPure()
+    code: '''
+      flow(
+        branchPure(({x}) => x, returns(() => 1))
+      )
+    '''
+    errors: [error 'returns']
+  ,
+    # addWrapper()
+    code: '''
+      flow(
+        addWrapper(({render}) => <div>{render()}</div>)
+      )
+    '''
+    errors: [error 'addWrapper']
+  ,
+    # addWrapperHOC()
+    code: '''
+      flow(
+        addWrapperHOC(withNavigation)
+      )
+    '''
+    errors: [error 'addWrapperHOC']
+  ,
+    # nested flowMax()
+    code: '''
+      flow(
+        flowMax(something())
+      )
+    '''
+    errors: [error 'flowMax']
   ]
 
 config =
