@@ -1,6 +1,6 @@
-{isFlowMax, nonmagicHelperNames, isFunction} = require '../util'
+{isFlowMax, nonmagicHelperNames, isFunction, isBranchPure} = require '../util'
 
-isNonMagic = (node) ->
+isNonmagic = (node) ->
   return yes unless node?
   return yes if isFunction node
   {callee} = node
@@ -19,5 +19,8 @@ module.exports =
     CallExpression: (node) ->
       return unless isFlowMax node
       for argument in node.arguments
-        return unless isNonMagic argument
+        return unless isNonmagic argument
+        if isBranchPure argument
+          for branchPureArgument in argument.arguments
+            return unless isNonmagic branchPureArgument
       context.report node, "Unnecessary use of flowMax()"
