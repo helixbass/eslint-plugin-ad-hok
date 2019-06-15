@@ -17,13 +17,28 @@ module.exports =
           type: 'array'
           items:
             type: 'string'
+        helperRegex:
+          type: 'string'
       additionalProperties: no
     ]
     fixable: 'code'
 
   create: (context) ->
     variant = context.options[0] ? 'always'
-    {whitelist = [], shouldFix} = context.options[1] ? {}
+    {whitelist = [], shouldFix, helperRegex = 'add.*'} = context.options[1] ? {}
+
+    regexMatchingHelpers = new RegExp(helperRegex)
+    isPotentiallyMagicCustomHelper = (argument) ->
+      return no unless argument?
+      name = argument.callee?.name ? argument.name
+      return no unless name?
+      regexMatchingHelpers.test name
+
+    isHelper = (argument) ->
+      return no unless argument?
+      return yes if argument.type is 'Identifier'
+      return no unless argument.type is 'CallExpression'
+      argument.callee.type is 'Identifier'
 
     report = (node) ->
       context.report {
@@ -59,6 +74,8 @@ module.exports =
         if isFunction argument
           return {}
         if isWhitelisted argument
+          return {}
+        if isHelper(argument) and not isPotentiallyMagicCustomHelper argument
           return {}
         report node
         return shouldReturn: yes
