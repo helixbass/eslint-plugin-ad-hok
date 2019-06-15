@@ -1,4 +1,11 @@
-{isFlowMax, needsFlowMax} = require '../util'
+{isFlowMax, nonmagicHelperNames, isFunction} = require '../util'
+
+isNonMagic = (node) ->
+  return yes unless node?
+  return yes if isFunction node
+  {callee} = node
+  return no unless callee?.type is 'Identifier'
+  callee.name in nonmagicHelperNames
 
 module.exports =
   meta:
@@ -9,26 +16,8 @@ module.exports =
     schema: []
 
   create: (context) ->
-    currentFlowMaxCalls = []
-
-    setUsed = ->
-      currentFlowMaxCalls[currentFlowMaxCalls.length - 1].used = yes
-
-    Identifier: (node) ->
-      return unless needsFlowMax node
-      setUsed() if currentFlowMaxCalls.length
-
     CallExpression: (node) ->
-      if isFlowMax node
-        currentFlowMaxCalls.push {node}
-        return
-
-      return unless currentFlowMaxCalls.length
-      return unless needsFlowMax node
-      setUsed()
-
-    'CallExpression:exit': (node) ->
       return unless isFlowMax node
-      {used} = currentFlowMaxCalls.pop()
-      return if used
+      for argument in node.arguments
+        return unless isNonMagic argument
       context.report node, "Unnecessary use of flowMax()"
