@@ -17,7 +17,7 @@ tests =
         addProps({a: 1})
       )
     '''
-    options: ['when-using-unknown-helpers']
+    options: ['whenUsingUnknownHelpers']
   ,
     # don't duplicate needs-flowmax
     code: '''
@@ -25,14 +25,14 @@ tests =
         addPropTypes({a: 1})
       )
     '''
-    options: ['when-using-unknown-helpers']
+    options: ['whenUsingUnknownHelpers']
   ,
     code: '''
       flow(
         branchPure(({x}) => x, returns(() => 2))
       )
     '''
-    options: ['when-using-unknown-helpers']
+    options: ['whenUsingUnknownHelpers']
   ,
     # functions are ok
     code: '''
@@ -40,7 +40,7 @@ tests =
         ({x}) => x
       )
     '''
-    options: ['when-using-unknown-helpers']
+    options: ['whenUsingUnknownHelpers']
   ,
     # whitelist call
     code: '''
@@ -48,7 +48,7 @@ tests =
         addSomethingNonmagic()
       )
     '''
-    options: ['when-using-unknown-helpers', whitelist: ['addSomethingNonmagic']]
+    options: ['whenUsingUnknownHelpers', whitelist: ['addSomethingNonmagic']]
   ,
     # whitelist call
     code: '''
@@ -56,7 +56,7 @@ tests =
         addSomethingNonmagic
       )
     '''
-    options: ['when-using-unknown-helpers', whitelist: ['addSomethingNonmagic']]
+    options: ['whenUsingUnknownHelpers', whitelist: ['addSomethingNonmagic']]
   ]
   invalid: [
     # always
@@ -82,14 +82,14 @@ tests =
     '''
     errors: [error()]
   ,
-    # when-using-unknown-helpers
+    # whenUsingUnknownHelpers
     code: '''
       flow(
         addSomething()
       )
     '''
     errors: [error()]
-    options: ['when-using-unknown-helpers']
+    options: ['whenUsingUnknownHelpers']
   ,
     code: '''
       flow(
@@ -97,7 +97,7 @@ tests =
       )
     '''
     errors: [error()]
-    options: ['when-using-unknown-helpers']
+    options: ['whenUsingUnknownHelpers']
   ,
     # nested flow()
     code: '''
@@ -108,7 +108,7 @@ tests =
       )
     '''
     errors: [error(), error()]
-    options: ['when-using-unknown-helpers']
+    options: ['whenUsingUnknownHelpers']
   ,
     # immediately-invoked functions are not ok
     code: '''
@@ -117,7 +117,7 @@ tests =
       )
     '''
     errors: [error()]
-    options: ['when-using-unknown-helpers']
+    options: ['whenUsingUnknownHelpers']
   ,
     # shouldFix
     code: '''

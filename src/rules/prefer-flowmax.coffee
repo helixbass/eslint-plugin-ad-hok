@@ -7,7 +7,7 @@ module.exports =
       category: 'Possible Errors'
       recommended: yes
     schema: [
-      enum: ['always', 'when-using-unknown-helpers']
+      enum: ['always', 'whenUsingUnknownHelpers']
     ,
       type: 'object'
       properties:
