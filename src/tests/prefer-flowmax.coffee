@@ -41,6 +41,22 @@ tests =
       )
     '''
     options: ['when-using-unknown-helpers']
+  ,
+    # whitelist call
+    code: '''
+      flow(
+        addSomethingNonmagic()
+      )
+    '''
+    options: ['when-using-unknown-helpers', whitelist: ['addSomethingNonmagic']]
+  ,
+    # whitelist call
+    code: '''
+      flow(
+        addSomethingNonmagic
+      )
+    '''
+    options: ['when-using-unknown-helpers', whitelist: ['addSomethingNonmagic']]
   ]
   invalid: [
     # always

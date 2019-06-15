@@ -36,6 +36,10 @@ module.exports =
             null
       }
 
+    isWhitelisted = (argument) ->
+      return no unless argument?
+      argument.callee?.name in whitelist or argument.name in whitelist
+
     CallExpression: (node) ->
       return unless isFlow node
       if variant is 'always'
@@ -53,6 +57,8 @@ module.exports =
                 return shouldReturn: yes
           return {}
         if isFunction argument
+          return {}
+        if isWhitelisted argument
           return {}
         report node
         return shouldReturn: yes
