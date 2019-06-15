@@ -30,6 +30,10 @@ nonmagicHelperNames = [
   'branchPure'
 ]
 
+isNonmagicHelper = (node) ->
+  return no unless node?.callee?.type is 'Identifier'
+  node.callee.name in nonmagicHelperNames
+
 isFunction = (node) ->
   node?.type in ['FunctionExpression', 'ArrowFunctionExpression']
 
@@ -41,4 +45,4 @@ getFlowToFlowMaxFixer = ({node, context}) ->
   (fixer) ->
     fixer.replaceText node.callee, 'flowMax'
 
-module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isBranchPure, getFlowToFlowMaxFixer}
+module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer}

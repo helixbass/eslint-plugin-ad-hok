@@ -11,6 +11,7 @@ module.exports =
       properties:
         shouldFix:
           type: 'boolean'
+      additionalProperties: no
     ]
     fixable: 'code'
 
