@@ -38,7 +38,19 @@ tests =
   ,
     code: '''
       flowMax(
+        branchPure(({x}) => x > 1, renderNothing()),
+      )
+    '''
+  ,
+    code: '''
+      flowMax(
         branch(({x}) => x > 1, returns(() => 3)),
+      )
+    '''
+  ,
+    code: '''
+      flowMax(
+        branchPure(({x}) => x > 1, returns(() => 3)),
       )
     '''
   ,
