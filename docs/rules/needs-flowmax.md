@@ -2,7 +2,7 @@
 
 This rules enforces that `flowMax()` is used instead of `flow()` anywhere that *definitely* uses `ad-hok` "magic" helpers
 
-#### Examples of **incorrect** code for this rule:
+#### :-1: Examples of **incorrect** code for this rule:
 ```js
 /*eslint ad-hok/needs-flowmax: "error"*/
 
@@ -27,7 +27,7 @@ flow(
 )
 ```
 
-#### Examples of **correct** code for this rule:
+#### :+1: Examples of **correct** code for this rule:
 ```js
 /*eslint ad-hok/needs-flowmax: "error"*/
 
