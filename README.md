@@ -14,14 +14,21 @@ npm install --save-dev eslint-plugin-ad-hok
 
 ## Configuration
 
-In your ESLint config, include:
+In your ESLint config, include the rules that you wish to use:
 ```
-plugins: ['ad-hok'],
+plugins: ["ad-hok"],
 rules: {
-  'ad-hok/no-unnecessary-flowmax': 'error',
-  'ad-hok/needs-flowmax': 'error'
+  "ad-hok/no-unnecessary-flowmax": "error",
+  "ad-hok/needs-flowmax": "error",
+  "ad-hok/prefer-flowmax": ["error", "whenUsingUnknownHelpers"]
 }
 ```
+
+## Rules
+
+* [`needs-flowmax`](./docs/rules/needs-flowmax.md) - ensure that `flowMax()` is used instead of `flow()` when you are *definitely* using "magic" `ad-hok` helpers
+* [`prefer-flowmax`](./docs/rules/prefer-flowmax.md) - ensure that `flowMax()` is used instead of `flow()` when you *may* be using "magic" `ad-hok` helpers (or everywhere)
+* [`no-unnecessary-flowmax`](./docs/rules/no-unnecessary-flowmax.md) - ensure that `flow()` is used instead of `flowMax()` when you are *definitely not* using "magic" `ad-hok` helpers
 
 ## License
 
