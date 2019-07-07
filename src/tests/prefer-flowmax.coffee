@@ -89,6 +89,14 @@ tests =
       )
     '''
     options: ['whenUsingUnknownHelpers']
+  ,
+    # recognizes addPropsOnChange()
+    code: '''
+      flow(
+        addPropsOnChange(['x'], ({x}) => ({a: x +1}))
+      )
+    '''
+    options: ['whenUsingUnknownHelpers']
   ]
   invalid: [
     # always
