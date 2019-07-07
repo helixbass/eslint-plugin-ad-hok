@@ -28,6 +28,7 @@ nonmagicHelperNames = [
   'addCallback'
   'addContext'
   'branchPure'
+  'addPropsOnChange'
 ]
 
 isNonmagicHelper = (node) ->
