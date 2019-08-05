@@ -4,17 +4,13 @@ module.exports =
       description: 'Flag uses of flowMax() within forwardRef()'
       category: 'Possible Errors'
       recommended: yes
-    schema: [
-      type: 'object'
-      additionalProperties: no
-    ]
-    fixable: 'code'
+    schema: []
 
   create: (context) ->
     report = (node) ->
       context.report {
         node,
-        message: "flowMax() cannot be used within forwardRef()"
+        message: "Avoid using flowMax() within React.forwardRef()"
       }
 
     "CallExpression[callee.name='forwardRef'] CallExpression[callee.name='flowMax']":
