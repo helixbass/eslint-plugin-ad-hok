@@ -4,7 +4,7 @@
 ruleTester = new RuleTester()
 
 error =
-  message: "flowMax() cannot be used within forwardRef()"
+  message: "Avoid using flowMax() within React.forwardRef()"
 
 tests =
   valid: [
