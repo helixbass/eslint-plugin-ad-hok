@@ -114,6 +114,22 @@ tests =
       )
     '''
     errors: [error()]
+  ,
+    code: '''
+      flowMax(
+        addProps({x: 1}),
+        ({x}) => <div>{x}</div>
+      )
+    '''
+    output: '''
+      flow(
+        addProps({x: 1}),
+        ({x}) => <div>{x}</div>
+      )
+    '''
+    errors: [error()]
+    settings:
+      'ad-hok/should-fix-flow-flowmax': yes
   ]
 
 config =

@@ -1,4 +1,4 @@
-{isFlowMax, nonmagicHelperNames, isFunction, isBranchPure} = require '../util'
+{isFlowMax, nonmagicHelperNames, isFunction, isBranchPure, shouldFix, getFlowMaxToFlowFixer} = require '../util'
 
 isNonmagic = (node) ->
   return yes unless node?
@@ -14,6 +14,7 @@ module.exports =
       category: 'General'
       recommended: yes
     schema: []
+    fixable: 'code'
 
   create: (context) ->
     CallExpression: (node) ->
@@ -23,4 +24,12 @@ module.exports =
         if isBranchPure argument
           for branchPureArgument in argument.arguments
             return unless isNonmagic branchPureArgument
-      context.report node, "Unnecessary use of flowMax()"
+      context.report {
+        node
+        message: 'Unnecessary use of flowMax()'
+        fix:
+          if shouldFix {context}
+            getFlowMaxToFlowFixer {node, context}
+          else
+            null
+      }

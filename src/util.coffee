@@ -46,4 +46,11 @@ getFlowToFlowMaxFixer = ({node, context}) ->
   (fixer) ->
     fixer.replaceText node.callee, 'flowMax'
 
-module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer}
+getFlowMaxToFlowFixer = ({node, context}) ->
+  (fixer) ->
+    fixer.replaceText node.callee, 'flow'
+
+shouldFix = ({context: {settings}}) ->
+  !!settings['ad-hok/should-fix-flow-flowmax']
+
+module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer, getFlowMaxToFlowFixer, shouldFix}

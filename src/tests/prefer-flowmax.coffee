@@ -48,7 +48,9 @@ tests =
         addSomethingNonmagic()
       )
     '''
-    options: ['whenUsingUnknownHelpers', whitelist: ['addSomethingNonmagic']]
+    options: ['whenUsingUnknownHelpers']
+    settings:
+      'ad-hok/nonmagic-helper-whitelist': ['addSomethingNonmagic']
   ,
     # whitelist call
     code: '''
@@ -56,9 +58,11 @@ tests =
         addSomethingNonmagic
       )
     '''
-    options: ['whenUsingUnknownHelpers', whitelist: ['addSomethingNonmagic']]
+    options: ['whenUsingUnknownHelpers']
+    settings:
+      'ad-hok/nonmagic-helper-whitelist': ['addSomethingNonmagic']
   ,
-    # helperRegex defaults to add.*
+    # possibly-magic-helper-regex defaults to add.*
     code: '''
       flow(
         something
@@ -105,7 +109,7 @@ tests =
         addProps({a: 1})
       )
     '''
-    # don't fix unless shouldFix
+    # don't fix unless should-fix-flow-flowmax
     output: '''
       flow(
         addProps({a: 1})
@@ -139,14 +143,16 @@ tests =
     errors: [error()]
     options: ['whenUsingUnknownHelpers']
   ,
-    # helperRegex
+    # possibly-magic-helper-regex
     code: '''
       flow(
         something
       )
     '''
     errors: [error()]
-    options: ['whenUsingUnknownHelpers', {helperRegex: 'add.*|some.*'}]
+    options: ['whenUsingUnknownHelpers']
+    settings:
+      'ad-hok/possibly-magic-helper-regex': 'add.*|some.*'
   ,
     # nested flow()
     code: '''
@@ -159,7 +165,7 @@ tests =
     errors: [error()]
     options: ['whenUsingUnknownHelpers']
   ,
-    # shouldFix
+    # should-fix-flow-flowmax
     code: '''
       flow(
         addProps({a: 1})
@@ -171,7 +177,9 @@ tests =
       )
     '''
     errors: [error()]
-    options: ['always', shouldFix: yes]
+    options: ['always']
+    settings:
+      'ad-hok/should-fix-flow-flowmax': yes
   ,
     # ternary isn't ok if one of its branches is a helper
     code: '''

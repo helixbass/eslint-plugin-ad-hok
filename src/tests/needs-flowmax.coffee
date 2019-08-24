@@ -77,7 +77,7 @@ tests =
         returns(() => 1)
       )
     '''
-    # don't fix unless shouldFix is set
+    # don't fix unless should-fix-flow-flowmax is set
     output: '''
       flow(
         returns(() => 1)
@@ -175,7 +175,8 @@ tests =
       )
     '''
     errors: [error 'returns']
-    options: [shouldFix: yes]
+    settings:
+      'ad-hok/should-fix-flow-flowmax': yes
   ]
 
 config =
