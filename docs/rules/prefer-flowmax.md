@@ -11,13 +11,15 @@ This rule can take a string option:
 
 When `"always"`, you should disable the `ad-hok/no-unnecessary-flowmax` rule as they will disagree
 
-This rule can take a second option as an object literal:
+## Relevant settings
 
-* When `"whenUsingUnknownHelpers"`, the `helperRegex` option specifies the naming convention for "secondary helpers" that may
-use `ad-hok` "magic" helpers. The default is `"helperRegex": "add.*"`
-* When `"whenUsingUnknownHelpers"`, the `whitelist` option accepts an array of helper names that should be treated as
-definitely non-"magic". The `whitelist` option overrides `helperRegex`
-* `"shouldFix": true` enables "fixing" `flow()` -> `flowMax()` when running ESLint in `--fix` mode. This option is intended
+This rule uses the following optional `settings`:
+
+* When `"whenUsingUnknownHelpers"`, the `ad-hok/possibly-magic-helper-regex` setting specifies the naming convention for "secondary helpers" that may
+use `ad-hok` "magic" helpers. The default is `"ad-hok/possibly-magic-helper-regex": "add.*"`
+* When `"whenUsingUnknownHelpers"`, the `ad-hok/nonmagic-helper-whitelist` setting accepts an array of helper names that should be treated as
+definitely non-"magic". The `ad-hok/nonmagic-helper-whitelist` setting overrides `ad-hok/possibly-magic-helper-regex`
+* Adding `"ad-hok/should-fix-flow-flowmax": true` to your `settings` enables "fixing" `flow()` -> `flowMax()` when running ESLint in `--fix` mode. This option is intended
 for use with [`eslint-plugin-known-imports`](https://github.com/helixbass/eslint-plugin-known-imports), which will then
 generate the `import` for `flowMax` and/or remove the `import` for `flow` as necessary
 
@@ -97,11 +99,16 @@ flow(
 )
 ```
 
-## helperRegex
+## ad-hok/possibly-magic-helper-regex
 
-#### :-1: Examples of incorrect code for the `"helperRegex"` option:
+#### :-1: Examples of incorrect code for the `"ad-hok/possibly-magic-helper-regex"` setting:
+```
+"settings": {
+  'ad-hok/possibly-magic-helper-regex": "getMagic.*"
+}
+```
 ```js
-/*eslint ad-hok/prefer-flowmax: ["error", "whenUsingUnknownHelpers", { "helperRegex": "getMagic.*" }]*/
+/*eslint ad-hok/prefer-flowmax: ["error", "whenUsingUnknownHelpers"]*/
 
 flow(
   getMagicFoo(),
@@ -109,9 +116,14 @@ flow(
 )
 ```
 
-#### :+1: Examples of correct code for the `"helperRegex"` option:
+#### :+1: Examples of correct code for the `"ad-hok/possibly-magic-helper-regex"` setting:
+```
+"settings": {
+  'ad-hok/possibly-magic-helper-regex": "getMagic.*"
+}
+```
 ```js
-/*eslint ad-hok/prefer-flowmax: ["error", "whenUsingUnknownHelpers", { "helperRegex": "getMagic.*" }]*/
+/*eslint ad-hok/prefer-flowmax: ["error", "whenUsingUnknownHelpers"]*/
 
 flowMax(
   getMagicFoo(),
@@ -124,11 +136,16 @@ flow(
 )
 ```
 
-## whitelist
+## ad-hok/nonmagic-helper-whitelist
 
-#### :-1: Examples of incorrect code for the `"whitelist"` option:
+#### :-1: Examples of incorrect code for the `"ad-hok/nonmagic-helper-whitelist"` setting:
+```
+"settings": {
+  'ad-hok/nonmagic-helper-whitelist": ["addSpice", "addSalt"]
+}
+```
 ```js
-/*eslint ad-hok/prefer-flowmax: ["error", "whenUsingUnknownHelpers", { "whitelist": ["addSpice", "addSalt"] }]*/
+/*eslint ad-hok/prefer-flowmax: ["error", "whenUsingUnknownHelpers"]*/
 
 flow(
   addSomethingNotWhitelisted(),
@@ -136,9 +153,14 @@ flow(
 )
 ```
 
-#### :+1: Examples of correct code for the `"whitelist"` option:
+#### :+1: Examples of correct code for the `"ad-hok/nonmagic-helper-whitelist"` setting:
+```
+"settings": {
+  'ad-hok/nonmagic-helper-whitelist": ["addSpice", "addSalt"]
+}
+```
 ```js
-/*eslint ad-hok/prefer-flowmax: ["error", "whenUsingUnknownHelpers", { "whitelist": ["addSpice", "addSalt"] }]*/
+/*eslint ad-hok/prefer-flowmax: ["error", "whenUsingUnknownHelpers"]*/
 
 flowMax(
   addSomethingNotWhitelisted(),

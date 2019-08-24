@@ -31,3 +31,9 @@ flowMax(
   ({foo}) => <div>{foo}</div>
 )
 ```
+
+### Relevant settings
+
+* Adding `"ad-hok/should-fix-flow-flowmax": true` to your `settings` enables "fixing" `flowMax()` -> `flow()` when running ESLint in `--fix` mode. This option is intended
+for use with [`eslint-plugin-known-imports`](https://github.com/helixbass/eslint-plugin-known-imports), which will then
+generate the `import` for `flow` and/or remove the `import` for `flowMax` as necessary
