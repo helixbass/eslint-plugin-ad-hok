@@ -14,6 +14,8 @@ npm install --save-dev eslint-plugin-ad-hok
 
 ## Configuration
 
+#### Using preset
+
 Use the [`recommended` preset](#recommended) to get reasonable defaults:
 ```
 "extends": [
@@ -31,6 +33,8 @@ You may also optionally specify settings that will be shared across all the plug
   "ad-hok/should-fix-flow-flowmax": true, // if you're using eslint-plugin-known-imports
 }
 ```
+
+#### Manually
 
 If you don't use the preset, include the rules that you wish to use:
 ```
