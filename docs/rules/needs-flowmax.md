@@ -48,9 +48,8 @@ flowMax(
 )
 ```
 
-## Options
+### Relevant settings
 
-This rule has an object option
-* `"shouldFix": true` enables "fixing" `flow()` -> `flowMax()` when running ESLint in `--fix` mode. This option is intended
+* Adding `"ad-hok/should-fix-flow-flowmax": true` to your `settings` enables "fixing" `flow()` -> `flowMax()` when running ESLint in `--fix` mode. This option is intended
 for use with [`eslint-plugin-known-imports`](https://github.com/helixbass/eslint-plugin-known-imports), which will then
 generate the `import` for `flowMax` and/or remove the `import` for `flow` as necessary
