@@ -8,4 +8,16 @@ rules = do flow(
   ffromPairs
 )
 
-module.exports = {rules}
+module.exports = {
+  rules
+  configs:
+    recommended:
+      plugins: ['ad-hok']
+      parserOptions:
+        ecmaFeatures:
+          jsx: yes
+      rules:
+        'ad-hok/needs-flowmax': 'error'
+        'ad-hok/prefer-flowmax': ['error', 'whenUsingUnknownHelpers']
+        'ad-hok/no-flowmax-in-forwardref': 'error'
+}

@@ -1,4 +1,4 @@
-{isFlow, isMagic, isBranchPure, getFlowToFlowMaxFixer} = require '../util'
+{isFlow, isMagic, isBranchPure, getFlowToFlowMaxFixer, shouldFix} = require '../util'
 
 module.exports =
   meta:
@@ -6,24 +6,16 @@ module.exports =
       description: 'Flag calls that are missing containing flowMax()'
       category: 'Possible Errors'
       recommended: yes
-    schema: [
-      type: 'object'
-      properties:
-        shouldFix:
-          type: 'boolean'
-      additionalProperties: no
-    ]
+    schema: []
     fixable: 'code'
 
   create: (context) ->
-    {shouldFix} = context.options[0] ? {}
-
     report = (node, magicName) ->
       context.report {
         node
         message: "#{magicName}() only works with flowMax()"
         fix:
-          if shouldFix
+          if shouldFix {context}
             getFlowToFlowMaxFixer {node, context}
           else
             null

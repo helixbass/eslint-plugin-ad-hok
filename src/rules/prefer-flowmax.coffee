@@ -1,4 +1,4 @@
-{isFlow, isMagic, isBranchPure, getFlowToFlowMaxFixer, isNonmagicHelper, isFunction} = require '../util'
+{isFlow, isMagic, isBranchPure, getFlowToFlowMaxFixer, isNonmagicHelper, isFunction, shouldFix} = require '../util'
 
 module.exports =
   meta:
@@ -11,8 +11,6 @@ module.exports =
     ,
       type: 'object'
       properties:
-        shouldFix:
-          type: 'boolean'
         whitelist:
           type: 'array'
           items:
@@ -25,7 +23,7 @@ module.exports =
 
   create: (context) ->
     variant = context.options[0] ? 'always'
-    {whitelist = [], shouldFix, helperRegex = 'add.*'} = context.options[1] ? {}
+    {whitelist = [], helperRegex = 'add.*'} = context.options[1] ? {}
 
     isWhitelisted = (name) ->
       name in whitelist
@@ -49,7 +47,7 @@ module.exports =
         node
         message: "Use flowMax() instead"
         fix:
-          if shouldFix
+          if shouldFix {context}
             getFlowToFlowMaxFixer {node, context}
           else
             null

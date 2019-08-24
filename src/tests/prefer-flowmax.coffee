@@ -105,7 +105,7 @@ tests =
         addProps({a: 1})
       )
     '''
-    # don't fix unless shouldFix
+    # don't fix unless should-fix-flow-flowmax
     output: '''
       flow(
         addProps({a: 1})
@@ -159,7 +159,7 @@ tests =
     errors: [error()]
     options: ['whenUsingUnknownHelpers']
   ,
-    # shouldFix
+    # should-fix-flow-flowmax
     code: '''
       flow(
         addProps({a: 1})
@@ -171,7 +171,9 @@ tests =
       )
     '''
     errors: [error()]
-    options: ['always', shouldFix: yes]
+    options: ['always']
+    settings:
+      'ad-hok/should-fix-flow-flowmax': yes
   ,
     # ternary isn't ok if one of its branches is a helper
     code: '''
