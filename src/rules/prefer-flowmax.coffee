@@ -8,22 +8,14 @@ module.exports =
       recommended: yes
     schema: [
       enum: ['always', 'whenUsingUnknownHelpers']
-    ,
-      type: 'object'
-      properties:
-        whitelist:
-          type: 'array'
-          items:
-            type: 'string'
-        helperRegex:
-          type: 'string'
-      additionalProperties: no
     ]
     fixable: 'code'
 
   create: (context) ->
     variant = context.options[0] ? 'always'
-    {whitelist = [], helperRegex = 'add.*'} = context.options[1] ? {}
+    {settings} = context
+    whitelist = settings['ad-hok/nonmagic-helper-whitelist'] ? []
+    helperRegex = settings['ad-hok/possibly-magic-helper-regex'] ? 'add.*'
 
     isWhitelisted = (name) ->
       name in whitelist

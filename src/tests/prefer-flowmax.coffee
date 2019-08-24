@@ -48,7 +48,9 @@ tests =
         addSomethingNonmagic()
       )
     '''
-    options: ['whenUsingUnknownHelpers', whitelist: ['addSomethingNonmagic']]
+    options: ['whenUsingUnknownHelpers']
+    settings:
+      'ad-hok/nonmagic-helper-whitelist': ['addSomethingNonmagic']
   ,
     # whitelist call
     code: '''
@@ -56,9 +58,11 @@ tests =
         addSomethingNonmagic
       )
     '''
-    options: ['whenUsingUnknownHelpers', whitelist: ['addSomethingNonmagic']]
+    options: ['whenUsingUnknownHelpers']
+    settings:
+      'ad-hok/nonmagic-helper-whitelist': ['addSomethingNonmagic']
   ,
-    # helperRegex defaults to add.*
+    # possibly-magic-helper-regex defaults to add.*
     code: '''
       flow(
         something
@@ -139,14 +143,16 @@ tests =
     errors: [error()]
     options: ['whenUsingUnknownHelpers']
   ,
-    # helperRegex
+    # possibly-magic-helper-regex
     code: '''
       flow(
         something
       )
     '''
     errors: [error()]
-    options: ['whenUsingUnknownHelpers', {helperRegex: 'add.*|some.*'}]
+    options: ['whenUsingUnknownHelpers']
+    settings:
+      'ad-hok/possibly-magic-helper-regex': 'add.*|some.*'
   ,
     # nested flow()
     code: '''
