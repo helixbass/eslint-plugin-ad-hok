@@ -102,6 +102,28 @@ tests =
       )
     '''
   ,
+    # callback-style dependencies
+    code: '''
+      flow(
+        addProps(({a, b}) => ({
+          c
+        }), (prevProps, props) => true),
+        addEffect(({a}) => () => {
+          c()
+        }, (prevProps, props) => true),
+        addHandlers({
+          a: ({b}) => () => {
+            c()
+          }
+        }, (prevProps, props) => true),
+        addStateHandlers(
+          {a: 1},
+          {b: (_, {c}) => () => ({a: 2})},
+          (prevProps, props) => true
+        )
+      )
+    '''
+  ,
   ]
   invalid: [
     # missing dependencies
