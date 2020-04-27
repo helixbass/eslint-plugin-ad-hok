@@ -50,7 +50,12 @@ getFlowMaxToFlowFixer = ({node, context}) ->
   (fixer) ->
     fixer.replaceText node.callee, 'flow'
 
+getAddDisplayNameFixer = ({node, context}) ->
+  (fixer) ->
+    componentName = node.parent.id.name
+    fixer.insertTextBefore node.arguments[0], "addDisplayName('#{componentName}'), "
+
 shouldFix = ({context: {settings}}) ->
   !!settings['ad-hok/should-fix-flow-flowmax']
 
-module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer, getFlowMaxToFlowFixer, shouldFix}
+module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer, getFlowMaxToFlowFixer, shouldFix, getAddDisplayNameFixer}
