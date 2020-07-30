@@ -1,6 +1,7 @@
 helperNames = [
   'addProps'
   'addEffect'
+  'addLayoutEffect'
   'addHandlers'
   'addStateHandlers'
 ]

@@ -24,6 +24,9 @@ tests =
         addEffect(({a}) => () => {
           c()
         }),
+        addLayoutEffect(({a}) => () => {
+          c()
+        }),
         addHandlers({
           a: ({b}) => () => {
             c()
@@ -43,6 +46,9 @@ tests =
           c
         }), ['a', 'b']),
         addEffect(({a}) => () => {
+          c()
+        }, ['a']),
+        addLayoutEffect(({a}) => () => {
           c()
         }, ['a']),
         addHandlers({
@@ -67,6 +73,9 @@ tests =
         addEffect(({a, b, ...c}) => () => {
           c()
         }, ['a']),
+        addLayoutEffect(({a, b, ...c}) => () => {
+          c()
+        }, ['a']),
         addHandlers({
           a: ({b, c, ...d}) => () => {
             c()
@@ -89,6 +98,9 @@ tests =
         addEffect(({a}) => () => {
           c()
         }, ['a.b']),
+        addLayoutEffect(({a}) => () => {
+          c()
+        }, ['a.b']),
         addHandlers({
           a: ({b}) => () => {
             c()
@@ -109,6 +121,9 @@ tests =
           c
         }), (prevProps, props) => true),
         addEffect(({a}) => () => {
+          c()
+        }, (prevProps, props) => true),
+        addLayoutEffect(({a}) => () => {
           c()
         }, (prevProps, props) => true),
         addHandlers({
@@ -136,6 +151,13 @@ tests =
   ,
     code: '''
       addEffect(({a}) => () => {
+        a()
+      }, [])
+    '''
+    errors: [errorMissing 'a']
+  ,
+    code: '''
+      addLayoutEffect(({a}) => () => {
         a()
       }, [])
     '''
@@ -172,6 +194,13 @@ tests =
   ,
     code: '''
       addEffect(({a}) => () => {
+        a()
+      }, ['a', 'b'])
+    '''
+    errors: [errorUnnecessary 'b']
+  ,
+    code: '''
+      addLayoutEffect(({a}) => () => {
         a()
       }, ['a', 'b'])
     '''
