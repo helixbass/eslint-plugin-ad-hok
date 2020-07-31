@@ -1,9 +1,6 @@
 {isTypescript} = require '../util'
 
-helperNames = [
-  'addHandlers'
-  'addStateHandlers'
-]
+helperNames = ['addHandlers', 'addStateHandlers']
 
 module.exports =
   meta:
@@ -38,7 +35,7 @@ module.exports =
           continue if param.typeAnnotation
           context.report {
             node
-            message: """
+            message: '''
               Parameter should be annotated to avoid implicit any-typing
-            """
+            '''
           }

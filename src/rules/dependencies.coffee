@@ -10,10 +10,9 @@ helperNames = [
 
 getFunctionParam = (argumentNum) -> (func) ->
   return unless func?.type is 'ArrowFunctionExpression'
-  func.params[argumentNum] ? {
+  func.params[argumentNum] ?
     type: 'ObjectPattern'
     properties: []
-  }
 
 module.exports =
   meta:
@@ -51,28 +50,25 @@ module.exports =
           dependencies = args[1]
           handlers = args[0]
           return unless handlers?.type is 'ObjectExpression'
-          dependencyParams =
-            for property in handlers.properties
-              {value} = property
-              getFunctionParam(0) value
+          dependencyParams = for handlerProperty in handlers.properties
+            {value: handlerFunction} = handlerProperty
+            getFunctionParam(0) handlerFunction
         when 'addStateHandlers'
           dependencies = args[2]
           handlers = args[1]
           return unless handlers?.type is 'ObjectExpression'
-          dependencyParams =
-            for property in handlers.properties
-              {value} = property
-              getFunctionParam(1) value
+          dependencyParams = for handlerProperty in handlers.properties
+            {value: handlerFunction} = handlerProperty
+            getFunctionParam(1) handlerFunction
         else
           dependencies = args[1]
           dependencyParams = [getFunctionParam(0) args[0]]
 
-      return unless dependencies?.type is 'ArrayExpression' and dependencyParams?.length
+      return unless (
+        dependencies?.type is 'ArrayExpression' and dependencyParams?.length
+      )
       usedDependencies = []
-      captureUsedDependencies = ({
-        property,
-        pathPrefix
-      }) ->
+      captureUsedDependencies = ({property, pathPrefix}) ->
         return unless property.type is 'Property'
         {key, value} = property
         return unless key.type is 'Identifier'
@@ -82,10 +78,10 @@ module.exports =
           return yes
         return unless value.type is 'ObjectPattern'
         for subProperty in value.properties
-          ret = captureUsedDependencies {
+          ret = captureUsedDependencies(
             property: subProperty
             pathPrefix: path
-          }
+          )
           return unless ret
         return yes
 
@@ -101,10 +97,21 @@ module.exports =
       for dependency in dependencies.elements
         return unless dependency.type is 'Literal'
         {value: dependencyPath} = dependency
-        unless usedDependencies.find (usedDependency) -> startsWith usedDependency, dependencyPath
+        unless (
+          # eslint-disable-next-line coffee/no-loop-func
+          usedDependencies.find((usedDependency) ->
+            startsWith usedDependency, dependencyPath
+          )
+        )
           reportUnused dependency
 
-      dependencyPaths = (dependency.value for dependency in dependencies.elements)
+      dependencyPaths =
+        dependency.value for dependency in dependencies.elements
       for usedDependency in usedDependencies
-        unless dependencyPaths.find (dependencyPath) -> startsWith usedDependency, dependencyPath
+        unless (
+          # eslint-disable-next-line coffee/no-loop-func, coffee/no-shadow
+          dependencyPaths.find((dependencyPath) ->
+            startsWith usedDependency, dependencyPath
+          )
+        )
           reportMissing node, usedDependency

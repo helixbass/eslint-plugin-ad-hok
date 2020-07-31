@@ -8,7 +8,8 @@
     "watch": "coffee -o lib/ -wc src/",
     "build": "coffee -o lib/ -c src/",
     "prepublish": "npm run build",
-    "test": "node_modules/mocha/bin/_mocha lib/tests/**/*.js"
+    "test": "node_modules/mocha/bin/_mocha lib/tests/**/*.js",
+    "lint": "eslint 'src/**/*.coffee'"
   },
   "files": [
     "lib"
@@ -30,9 +31,14 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "coffeescript": "^2.3.2",
-    "eslint": "^5.13.0",
-    "mocha": "^5.2.0"
+    "coffeescript": "^2.5.0",
+    "eslint": "^7",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-coffee": "^0.1.12",
+    "eslint-plugin-prettier": "^3.1.4",
+    "mocha": "^5.2.0",
+    "prettier": "github:helixbass/prettier#b8818ebd",
+    "prettier-plugin-coffeescript": "^0.1.4"
   },
   "dependencies": {
     "lodash": "^4.17.15"

@@ -4,7 +4,7 @@
 ruleTester = new RuleTester()
 
 error = ->
-  message: "Unnecessary use of flowMax()"
+  message: 'Unnecessary use of flowMax()'
 
 tests =
   valid: [
@@ -133,12 +133,12 @@ tests =
   ]
 
 config =
-  parser: 'babel-eslint'
+  parser: require.resolve 'babel-eslint'
   parserOptions:
     ecmaVersion: 2018
     ecmaFeatures:
       jsx: yes
 
-Object.assign(test, config) for test in [...tests.valid, ...tests.invalid]
+Object.assign test, config for test in [...tests.valid, ...tests.invalid]
 
 ruleTester.run 'no-unnecessary-flowmax', rule, tests

@@ -3,8 +3,7 @@
 
 ruleTester = new RuleTester()
 
-error =
-  message: 'Set a display name with addDisplayName()'
+error = message: 'Set a display name with addDisplayName()'
 
 tests =
   valid: [
@@ -64,12 +63,12 @@ tests =
   ]
 
 config =
-  parser: 'babel-eslint'
+  parser: require.resolve 'babel-eslint'
   parserOptions:
     ecmaVersion: 2018
     ecmaFeatures:
       jsx: yes
 
-Object.assign(test, config) for test in [...tests.valid, ...tests.invalid]
+Object.assign test, config for test in [...tests.valid, ...tests.invalid]
 
 ruleTester.run 'require-adddisplayname', rule, tests

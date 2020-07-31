@@ -3,9 +3,9 @@
 
 ruleTester = new RuleTester()
 
-errorNonFinal = """
+errorNonFinal = '''
   cleanupProps() is type-unsafe unless last in chain, consider removeProps()
-"""
+'''
 
 tests =
   valid: [
@@ -163,12 +163,12 @@ tests =
   ]
 
 config =
-  parser: 'babel-eslint'
+  parser: require.resolve 'babel-eslint'
   parserOptions:
     ecmaVersion: 2018
     ecmaFeatures:
       jsx: yes
 
-Object.assign(test, config) for test in [...tests.valid, ...tests.invalid]
+Object.assign test, config for test in [...tests.valid, ...tests.invalid]
 
 ruleTester.run 'cleanupprops-last', rule, tests
