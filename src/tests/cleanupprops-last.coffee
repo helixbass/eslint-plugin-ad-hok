@@ -4,7 +4,7 @@
 ruleTester = new RuleTester()
 
 errorNonFinal = """
-  cleanupProps() is type-unsafe unless last in chain
+  cleanupProps() is type-unsafe unless last in chain, consider removeProps()
 """
 
 tests =

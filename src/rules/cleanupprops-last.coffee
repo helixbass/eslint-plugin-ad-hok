@@ -24,6 +24,6 @@ module.exports =
       context.report {
         node
         message: """
-          cleanupProps() is type-unsafe unless last in chain
+          cleanupProps() is type-unsafe unless last in chain, consider removeProps()
         """
       }
