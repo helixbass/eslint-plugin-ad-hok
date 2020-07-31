@@ -268,10 +268,7 @@ tests =
         b: 1
       }), ['b'])
     '''
-    errors: [
-      errorMissing 'c'
-      errorUnnecessary 'b'
-    ]
+    errors: [errorMissing('c'), errorUnnecessary 'b']
   ,
     # aggregates handlers
     code: '''
@@ -287,10 +284,7 @@ tests =
         []
       )
     '''
-    errors: [
-      errorMissing 'b'
-      errorMissing 'd'
-    ]
+    errors: [errorMissing('b'), errorMissing 'd']
   ,
     code: '''
       addStateHandlers(
@@ -302,10 +296,7 @@ tests =
         ['d']
       )
     '''
-    errors: [
-      errorMissing 'c'
-      errorMissing 'f'
-    ]
+    errors: [errorMissing('c'), errorMissing 'f']
   ,
     # wrong nested dependencies
     code: '''
@@ -313,51 +304,51 @@ tests =
         a()
       }, ['a.c'])
     '''
-    errors: [errorMissing('a.b'), errorUnnecessary('a.c')]
+    errors: [errorMissing('a.b'), errorUnnecessary 'a.c']
   ,
     code: '''
       addEffect(({a: {b}}) => () => {
         a()
       }, ['a.b', 'a.c'])
     '''
-    errors: [errorUnnecessary('a.c')]
+    errors: [errorUnnecessary 'a.c']
   ,
     code: '''
       addEffect(({a: {b}}) => () => {
         a()
       }, ['a.b.c'])
     '''
-    errors: [errorMissing('a.b'), errorUnnecessary('a.b.c')]
+    errors: [errorMissing('a.b'), errorUnnecessary 'a.b.c']
   ,
     code: '''
       addEffect(({a: {b, c}}) => () => {
         a()
       }, ['a.b'])
     '''
-    errors: [errorMissing('a.c')]
+    errors: [errorMissing 'a.c']
   ,
     code: '''
       addEffect(({a: {b, c: {d}}}) => () => {
         a()
       }, ['a.b'])
     '''
-    errors: [errorMissing('a.c.d')]
+    errors: [errorMissing 'a.c.d']
   ,
     code: '''
       addEffect(({a: {b: c}}) => () => {
         a()
       }, ['a.c'])
     '''
-    errors: [errorMissing('a.b'), errorUnnecessary('a.c')]
+    errors: [errorMissing('a.b'), errorUnnecessary 'a.c']
   ]
 
 config =
-  parser: 'babel-eslint'
+  parser: require.resolve 'babel-eslint'
   parserOptions:
     ecmaVersion: 2018
     ecmaFeatures:
       jsx: yes
 
-Object.assign(test, config) for test in [...tests.valid, ...tests.invalid]
+Object.assign test, config for test in [...tests.valid, ...tests.invalid]
 
 ruleTester.run 'dependencies', rule, tests

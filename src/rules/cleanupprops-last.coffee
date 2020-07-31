@@ -15,7 +15,9 @@ module.exports =
 
     CallExpression: (node) ->
       {callee, parent} = node
-      return unless callee?.type is 'Identifier' and callee.name is 'cleanupProps'
+      return unless (
+        callee?.type is 'Identifier' and callee.name is 'cleanupProps'
+      )
 
       return unless isFlowOrFlowMax parent
       {arguments: args} = parent
@@ -23,7 +25,7 @@ module.exports =
 
       context.report {
         node
-        message: """
+        message: '''
           cleanupProps() is type-unsafe unless last in chain, consider removeProps()
-        """
+        '''
       }

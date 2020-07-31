@@ -3,14 +3,14 @@
 
 ruleTester = new RuleTester()
 
-errorMissingAnnotation = """
+errorMissingAnnotation = '''
   Parameter should be annotated to avoid implicit any-typing
-"""
+'''
 
 tests =
   valid: [
     # ignore .js files
-    filename: 'test.js',
+    filename: 'test.js'
     code: '''
       flowMax(
         addHandlers({
@@ -29,10 +29,10 @@ tests =
           }
         ),
       )
-    ''',
+    '''
   ,
     # ignore .jsx files
-    filename: 'test.jsx',
+    filename: 'test.jsx'
     code: '''
       flowMax(
         addHandlers({
@@ -51,9 +51,9 @@ tests =
           }
         ),
       )
-    ''',
+    '''
   ,
-    filename: 'test.ts',
+    filename: 'test.ts'
     code: '''
       flowMax(
         addHandlers({
@@ -72,10 +72,10 @@ tests =
           }
         ),
       )
-    ''',
+    '''
   ]
   invalid: [
-    filename: 'test.ts',
+    filename: 'test.ts'
     code: '''
       flowMax(
         addHandlers({
@@ -84,10 +84,10 @@ tests =
           }
         }),
       )
-    ''',
+    '''
     errors: [errorMissingAnnotation]
   ,
-    filename: 'test.tsx',
+    filename: 'test.tsx'
     code: '''
       flowMax(
         addHandlers({
@@ -96,10 +96,10 @@ tests =
           }
         }),
       )
-    ''',
+    '''
     errors: [errorMissingAnnotation]
   ,
-    filename: 'test.ts',
+    filename: 'test.ts'
     code: '''
       flowMax(
         addStateHandlers(
@@ -113,10 +113,10 @@ tests =
           }
         ),
       )
-    ''',
+    '''
     errors: [errorMissingAnnotation]
   ,
-    filename: 'test.tsx',
+    filename: 'test.tsx'
     code: '''
       flowMax(
         addStateHandlers(
@@ -130,11 +130,11 @@ tests =
           }
         ),
       )
-    ''',
+    '''
     errors: [errorMissingAnnotation]
   ,
     # complex param
-    filename: 'test.tsx',
+    filename: 'test.tsx'
     code: '''
       flowMax(
         addStateHandlers(
@@ -148,17 +148,17 @@ tests =
           }
         ),
       )
-    ''',
+    '''
     errors: [errorMissingAnnotation]
   ]
 
 config =
-  parser: 'babel-eslint'
+  parser: require.resolve 'babel-eslint'
   parserOptions:
     ecmaVersion: 2018
     ecmaFeatures:
       jsx: yes
 
-Object.assign(test, config) for test in [...tests.valid, ...tests.invalid]
+Object.assign test, config for test in [...tests.valid, ...tests.invalid]
 
 ruleTester.run 'annotate-handler-param-types', rule, tests

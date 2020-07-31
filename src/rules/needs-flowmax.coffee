@@ -1,4 +1,10 @@
-{isFlow, isMagic, isBranchPure, getFlowToFlowMaxFixer, shouldFix} = require '../util'
+{
+  isFlow
+  isMagic
+  isBranchPure
+  getFlowToFlowMaxFixer
+  shouldFix
+} = require '../util'
 
 module.exports =
   meta:
@@ -14,11 +20,10 @@ module.exports =
       context.report {
         node
         message: "#{magicName}() only works with flowMax()"
-        fix:
-          if shouldFix {context}
-            getFlowToFlowMaxFixer {node, context}
-          else
-            null
+        fix: if shouldFix {context}
+          getFlowToFlowMaxFixer {node, context}
+        else
+          null
       }
 
     CallExpression: (node) ->

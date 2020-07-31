@@ -47,18 +47,21 @@ isBranchPure = (node) ->
   return unless node?.callee?.type is 'Identifier'
   node.callee.name is 'branchPure'
 
-getFlowToFlowMaxFixer = ({node, context}) ->
+getFlowToFlowMaxFixer = ({node}) ->
   (fixer) ->
     fixer.replaceText node.callee, 'flowMax'
 
-getFlowMaxToFlowFixer = ({node, context}) ->
+getFlowMaxToFlowFixer = ({node}) ->
   (fixer) ->
     fixer.replaceText node.callee, 'flow'
 
-getAddDisplayNameFixer = ({node, context}) ->
+getAddDisplayNameFixer = ({node}) ->
   (fixer) ->
     componentName = node.parent.id.name
-    fixer.insertTextBefore node.arguments[0], "addDisplayName('#{componentName}'), "
+    fixer.insertTextBefore(
+      node.arguments[0]
+      "addDisplayName('#{componentName}'), "
+    )
 
 shouldFix = ({context: {settings}}) ->
   !!settings['ad-hok/should-fix-flow-flowmax']
@@ -67,4 +70,19 @@ isTypescript = (context) ->
   extension = path.extname context.getFilename()
   extension in ['.ts', '.tsx']
 
-module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer, getFlowMaxToFlowFixer, shouldFix, getAddDisplayNameFixer, isTypescript, isFlowOrFlowMax}
+module.exports = {
+  isFlowMax
+  isFlow
+  magicHelperNames
+  nonmagicHelperNames
+  isFunction
+  isMagic
+  isNonmagicHelper
+  isBranchPure
+  getFlowToFlowMaxFixer
+  getFlowMaxToFlowFixer
+  shouldFix
+  getAddDisplayNameFixer
+  isTypescript
+  isFlowOrFlowMax
+}
