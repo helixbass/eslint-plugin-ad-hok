@@ -1,6 +1,6 @@
 {flow, map: fmap, fromPairs: ffromPairs} = require 'lodash/fp'
 
-ruleNames = ['no-unnecessary-flowmax', 'needs-flowmax', 'prefer-flowmax', 'no-flowmax-in-forwardref', 'dependencies', 'require-adddisplayname']
+ruleNames = ['no-unnecessary-flowmax', 'needs-flowmax', 'prefer-flowmax', 'no-flowmax-in-forwardref', 'dependencies', 'require-adddisplayname', 'annotate-handler-param-types']
 
 rules = do flow(
   -> ruleNames
