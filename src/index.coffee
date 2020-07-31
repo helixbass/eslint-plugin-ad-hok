@@ -8,6 +8,11 @@ rules = do flow(
   ffromPairs
 )
 
+sharedRecommendRules =
+  'ad-hok/needs-flowmax': 'error'
+  'ad-hok/prefer-flowmax': ['error', 'whenUsingUnknownHelpers']
+  'ad-hok/no-flowmax-in-forwardref': 'error'
+
 module.exports = {
   rules
   configs:
@@ -16,8 +21,12 @@ module.exports = {
       parserOptions:
         ecmaFeatures:
           jsx: yes
-      rules:
-        'ad-hok/needs-flowmax': 'error'
-        'ad-hok/prefer-flowmax': ['error', 'whenUsingUnknownHelpers']
-        'ad-hok/no-flowmax-in-forwardref': 'error'
+      rules: sharedRecommendRules
+    'recommended-typescript':
+      plugins: ['ad-hok']
+      parserOptions:
+        ecmaFeatures:
+          jsx: yes
+      rules: Object.assign sharedRecommendRules,
+        'ad-hok/annotate-handler-param-types': 'error'
 }
