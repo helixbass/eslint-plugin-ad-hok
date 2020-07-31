@@ -1,12 +1,17 @@
 {flow, map: fmap, fromPairs: ffromPairs} = require 'lodash/fp'
 
-ruleNames = ['no-unnecessary-flowmax', 'needs-flowmax', 'prefer-flowmax', 'no-flowmax-in-forwardref', 'dependencies', 'require-adddisplayname']
+ruleNames = ['no-unnecessary-flowmax', 'needs-flowmax', 'prefer-flowmax', 'no-flowmax-in-forwardref', 'dependencies', 'require-adddisplayname', 'annotate-handler-param-types']
 
 rules = do flow(
   -> ruleNames
   fmap (ruleName) -> [ruleName, require "./rules/#{ruleName}"]
   ffromPairs
 )
+
+sharedRecommendRules =
+  'ad-hok/needs-flowmax': 'error'
+  'ad-hok/prefer-flowmax': ['error', 'whenUsingUnknownHelpers']
+  'ad-hok/no-flowmax-in-forwardref': 'error'
 
 module.exports = {
   rules
@@ -16,8 +21,12 @@ module.exports = {
       parserOptions:
         ecmaFeatures:
           jsx: yes
-      rules:
-        'ad-hok/needs-flowmax': 'error'
-        'ad-hok/prefer-flowmax': ['error', 'whenUsingUnknownHelpers']
-        'ad-hok/no-flowmax-in-forwardref': 'error'
+      rules: sharedRecommendRules
+    'recommended-typescript':
+      plugins: ['ad-hok']
+      parserOptions:
+        ecmaFeatures:
+          jsx: yes
+      rules: Object.assign sharedRecommendRules,
+        'ad-hok/annotate-handler-param-types': 'error'
 }

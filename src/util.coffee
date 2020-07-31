@@ -1,3 +1,5 @@
+path = require 'path'
+
 isFlowMax = (node) ->
   node?.callee?.type is 'Identifier' and node.callee.name is 'flowMax'
 
@@ -58,4 +60,8 @@ getAddDisplayNameFixer = ({node, context}) ->
 shouldFix = ({context: {settings}}) ->
   !!settings['ad-hok/should-fix-flow-flowmax']
 
-module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer, getFlowMaxToFlowFixer, shouldFix, getAddDisplayNameFixer}
+isTypescript = (context) ->
+  extension = path.extname context.getFilename()
+  extension in ['.ts', '.tsx']
+
+module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer, getFlowMaxToFlowFixer, shouldFix, getAddDisplayNameFixer, isTypescript}
