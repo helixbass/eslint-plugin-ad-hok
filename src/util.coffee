@@ -6,6 +6,9 @@ isFlowMax = (node) ->
 isFlow = (node) ->
   node?.callee?.type is 'Identifier' and node.callee.name is 'flow'
 
+isFlowOrFlowMax = (node) ->
+  isFlowMax(node) or isFlow node
+
 magicHelperNames = [
   'returns'
   'renderNothing'
@@ -64,4 +67,4 @@ isTypescript = (context) ->
   extension = path.extname context.getFilename()
   extension in ['.ts', '.tsx']
 
-module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer, getFlowMaxToFlowFixer, shouldFix, getAddDisplayNameFixer, isTypescript}
+module.exports = {isFlowMax, isFlow, magicHelperNames, nonmagicHelperNames, isFunction, isMagic, isNonmagicHelper, isBranchPure, getFlowToFlowMaxFixer, getFlowMaxToFlowFixer, shouldFix, getAddDisplayNameFixer, isTypescript, isFlowOrFlowMax}

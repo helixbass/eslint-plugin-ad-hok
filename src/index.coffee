@@ -1,6 +1,6 @@
 {flow, map: fmap, fromPairs: ffromPairs} = require 'lodash/fp'
 
-ruleNames = ['no-unnecessary-flowmax', 'needs-flowmax', 'prefer-flowmax', 'no-flowmax-in-forwardref', 'dependencies', 'require-adddisplayname', 'annotate-handler-param-types']
+ruleNames = ['no-unnecessary-flowmax', 'needs-flowmax', 'prefer-flowmax', 'no-flowmax-in-forwardref', 'dependencies', 'require-adddisplayname', 'annotate-handler-param-types', 'cleanupprops-last']
 
 rules = do flow(
   -> ruleNames
@@ -29,4 +29,5 @@ module.exports = {
           jsx: yes
       rules: Object.assign sharedRecommendRules,
         'ad-hok/annotate-handler-param-types': 'error'
+        'ad-hok/cleanupprops-last': 'error'
 }
