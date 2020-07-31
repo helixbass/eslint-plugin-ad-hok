@@ -92,23 +92,23 @@ tests =
     # path dependencies
     code: '''
       flow(
-        addProps(({a, b}) => ({
+        addProps(({a: {c}, b: {d}}) => ({
           c
-        }), ['a.b', 'b']),
-        addEffect(({a}) => () => {
+        }), ['a.c', 'b']),
+        addEffect(({a: {b}}) => () => {
           c()
         }, ['a.b']),
-        addLayoutEffect(({a}) => () => {
+        addLayoutEffect(({a: {b}}) => () => {
           c()
         }, ['a.b']),
         addHandlers({
-          a: ({b}) => () => {
+          a: ({b: {c}}) => () => {
             c()
           }
         }, ['b.c']),
         addStateHandlers(
           {a: 1},
-          {b: (_, {c}) => () => ({a: 2})},
+          {b: (_, {c: {d}}) => () => ({a: 2})},
           ['c.d']
         )
       )
@@ -139,6 +139,41 @@ tests =
       )
     '''
   ,
+    # multiple path dependencies
+    code: '''
+      flowMax(
+        addProps(({a: {b, c: {d, e}}}) => ({
+          c
+        }), ['a.b', 'a.c.d', 'a.c.e']),
+      )
+    '''
+  ,
+    # multiple path dependencies nested parent
+    code: '''
+      flowMax(
+        addProps(({a: {b, c: {d, e}}}) => ({
+          c
+        }), ['a.b', 'a.c']),
+      )
+    '''
+  ,
+    # multiple path dependencies overall parent
+    code: '''
+      flowMax(
+        addProps(({a: {b, c: {d, e}}}) => ({
+          c
+        }), ['a']),
+      )
+    '''
+  ,
+    # destructured renaming
+    code: '''
+      flowMax(
+        addProps(({a: {b: c}}) => ({
+          c
+        }), ['a.b']),
+      )
+    '''
   ]
   invalid: [
     # missing dependencies
@@ -166,7 +201,7 @@ tests =
     code: '''
       addStateHandlers(
         {a: 1},
-        {b: (_, {c, d}) => () => ({a: c + d})},
+        {b: (_, {c, d: {e}}) => () => ({a: c + d})},
         ['d.e']
       )
     '''
@@ -272,6 +307,48 @@ tests =
       errorMissing 'f'
     ]
   ,
+    # wrong nested dependencies
+    code: '''
+      addEffect(({a: {b}}) => () => {
+        a()
+      }, ['a.c'])
+    '''
+    errors: [errorMissing('a.b'), errorUnnecessary('a.c')]
+  ,
+    code: '''
+      addEffect(({a: {b}}) => () => {
+        a()
+      }, ['a.b', 'a.c'])
+    '''
+    errors: [errorUnnecessary('a.c')]
+  ,
+    code: '''
+      addEffect(({a: {b}}) => () => {
+        a()
+      }, ['a.b.c'])
+    '''
+    errors: [errorMissing('a.b'), errorUnnecessary('a.b.c')]
+  ,
+    code: '''
+      addEffect(({a: {b, c}}) => () => {
+        a()
+      }, ['a.b'])
+    '''
+    errors: [errorMissing('a.c')]
+  ,
+    code: '''
+      addEffect(({a: {b, c: {d}}}) => () => {
+        a()
+      }, ['a.b'])
+    '''
+    errors: [errorMissing('a.c.d')]
+  ,
+    code: '''
+      addEffect(({a: {b: c}}) => () => {
+        a()
+      }, ['a.c'])
+    '''
+    errors: [errorMissing('a.b'), errorUnnecessary('a.c')]
   ]
 
 config =

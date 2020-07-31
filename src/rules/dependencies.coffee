@@ -1,3 +1,5 @@
+{startsWith} = require 'lodash'
+
 helperNames = [
   'addProps'
   'addEffect'
@@ -67,22 +69,42 @@ module.exports =
 
       return unless dependencies?.type is 'ArrayExpression' and dependencyParams?.length
       usedDependencies = []
+      captureUsedDependencies = ({
+        property,
+        pathPrefix
+      }) ->
+        return unless property.type is 'Property'
+        {key, value} = property
+        return unless key.type is 'Identifier'
+        path = "#{pathPrefix}#{if pathPrefix then '.' else ''}#{key.name}"
+        if value.type is 'Identifier'
+          usedDependencies.push path unless path in usedDependencies
+          return yes
+        return unless value.type is 'ObjectPattern'
+        for subProperty in value.properties
+          ret = captureUsedDependencies {
+            property: subProperty
+            pathPrefix: path
+          }
+          return unless ret
+        return yes
+
       for dependencyParam in dependencyParams
         return unless dependencyParam?.type is 'ObjectPattern'
         for property in dependencyParam.properties
-          return unless property.type is 'Property'
-          {key} = property
-          return unless key.type is 'Identifier'
-          usedDependencies.push key.name unless key.name in usedDependencies
+          ret = captureUsedDependencies {
+            property
+            pathPrefix: ''
+          }
+          return unless ret?
 
       for dependency in dependencies.elements
         return unless dependency.type is 'Literal'
-        {value} = dependency
-        rootDependency = value.split('.')[0]
-        unless rootDependency in usedDependencies
+        {value: dependencyPath} = dependency
+        unless usedDependencies.find (usedDependency) -> startsWith usedDependency, dependencyPath
           reportUnused dependency
 
-      rootDependencies = (dependency.value.split('.')[0] for dependency in dependencies.elements)
+      dependencyPaths = (dependency.value for dependency in dependencies.elements)
       for usedDependency in usedDependencies
-        unless usedDependency in rootDependencies
+        unless dependencyPaths.find (dependencyPath) -> startsWith usedDependency, dependencyPath
           reportMissing node, usedDependency
