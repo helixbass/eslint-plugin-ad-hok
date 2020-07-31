@@ -5,13 +5,6 @@ helperNames = [
   'addStateHandlers'
 ]
 
-getFunctionParam = (argumentNum) -> (func) ->
-  return unless func?.type is 'ArrowFunctionExpression'
-  func.params[argumentNum] ? {
-    type: 'ObjectPattern'
-    properties: []
-  }
-
 module.exports =
   meta:
     docs:
