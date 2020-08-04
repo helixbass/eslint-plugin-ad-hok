@@ -349,7 +349,7 @@ tests =
     '''
     errors: [errorMissing('a.b'), errorUnnecessary 'a.c']
   ,
-    # effects options doesn't affect other chcking
+    # effects options doesn't affect other checking
     code: '''
       addStateHandlers(
         {a: 1},
