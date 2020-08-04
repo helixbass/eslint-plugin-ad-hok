@@ -129,7 +129,7 @@ tests =
     '''
     errors: [error()]
     settings:
-      'ad-hok/should-fix-flow-flowmax': yes
+      'ad-hok/should-fix-importable-names': yes
   ]
 
 config =

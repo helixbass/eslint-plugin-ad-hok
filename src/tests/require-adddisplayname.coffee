@@ -40,7 +40,7 @@ tests =
       )
     '''
     settings:
-      'ad-hok/should-fix-flow-flowmax': yes
+      'ad-hok/should-fix-importable-names': yes
     output: '''
       const Component = flowMax(
         addDisplayName('Component'), ({b}) => <div>{b}</div>

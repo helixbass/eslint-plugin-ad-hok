@@ -109,7 +109,7 @@ tests =
         addProps({a: 1})
       )
     '''
-    # don't fix unless should-fix-flow-flowmax
+    # don't fix unless should-fix-importable-names
     output: '''
       flow(
         addProps({a: 1})
@@ -165,7 +165,7 @@ tests =
     errors: [error()]
     options: ['whenUsingUnknownHelpers']
   ,
-    # should-fix-flow-flowmax
+    # should-fix-importable-names
     code: '''
       flow(
         addProps({a: 1})
@@ -179,7 +179,7 @@ tests =
     errors: [error()]
     options: ['always']
     settings:
-      'ad-hok/should-fix-flow-flowmax': yes
+      'ad-hok/should-fix-importable-names': yes
   ,
     # ternary isn't ok if one of its branches is a helper
     code: '''
