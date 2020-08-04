@@ -174,6 +174,14 @@ tests =
         }), ['a.b']),
       )
     '''
+  ,
+    # effects option
+    code: '''
+      addEffect(({a}) => () => {
+        a()
+      }, [])
+    '''
+    options: [effects: no]
   ]
   invalid: [
     # missing dependencies
@@ -340,6 +348,20 @@ tests =
       }, ['a.c'])
     '''
     errors: [errorMissing('a.b'), errorUnnecessary 'a.c']
+  ,
+    # effects options doesn't affect other checking
+    code: '''
+      addStateHandlers(
+        {a: 1},
+        {
+          b: (_, {c, d}) => () => ({a: 2}),
+          e: (_, {f}) => () => ({a: 3}),
+        },
+        ['d']
+      )
+    '''
+    errors: [errorMissing('c'), errorMissing 'f']
+    options: [effects: no]
   ]
 
 config =
