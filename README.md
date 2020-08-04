@@ -71,12 +71,14 @@ If you don't use the preset, include the rules that you wish to use:
 }
 ```
 
+
+
 ## Rules
 
-* [`ad-hok/needs-flowmax`](./docs/rules/needs-flowmax.md) - ensure that `flowMax()` is used instead of `flow()` when you are *definitely* using "magic" `ad-hok` helpers
-* [`ad-hok/prefer-flowmax`](./docs/rules/prefer-flowmax.md) - ensure that `flowMax()` is used instead of `flow()` when you *may* be using "magic" `ad-hok` helpers (or everywhere)
-* [`ad-hok/no-unnecessary-flowmax`](./docs/rules/no-unnecessary-flowmax.md) - ensure that `flow()` is used instead of `flowMax()` when you are *definitely not* using "magic" `ad-hok` helpers
+
 * [`ad-hok/no-flowmax-in-forwardref`](./docs/rules/no-flowmax-in-forwardref.md) - flag uses of `flowMax()` inside [`React.forwardRef()`](https://reactjs.org/docs/forwarding-refs.html)
+
+
 
 ## Configuration presets
 
@@ -95,9 +97,8 @@ See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extendi
 
 The rules enabled in this configuration are:
 
-* [`ad-hok/needs-flowmax`](./docs/rules/needs-flowmax.md)
-* [`ad-hok/prefer-flowmax`](./docs/rules/prefer-flowmax.md) (specifically, `"ad-hok/prefer-flowmax": ["error", "whenUsingUnknownHelpers"]`)
 * [`ad-hok/no-flowmax-in-forwardref`](./docs/rules/no-flowmax-in-forwardref.md)
+
 
 ### Recommended-Typescript
 
