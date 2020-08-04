@@ -1,6 +1,6 @@
 {isTypescript} = require '../util'
 
-helperNames = ['addHandlers', 'addStateHandlers']
+helperNames = ['addHandlers', 'addStateHandlers', 'addExtendedHandlers']
 
 module.exports =
   meta:
@@ -20,7 +20,7 @@ module.exports =
       return unless name in helperNames
 
       switch name
-        when 'addHandlers'
+        when 'addHandlers', 'addExtendedHandlers'
           handlers = args[0]
         when 'addStateHandlers'
           handlers = args[1]
