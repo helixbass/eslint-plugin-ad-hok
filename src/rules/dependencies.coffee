@@ -1,13 +1,5 @@
 {startsWith} = require 'lodash'
 
-helperNames = [
-  'addProps'
-  'addEffect'
-  'addLayoutEffect'
-  'addHandlers'
-  'addStateHandlers'
-]
-
 getFunctionParam = (argumentNum) -> (func) ->
   return unless func?.type is 'ArrowFunctionExpression'
   func.params[argumentNum] ?
@@ -20,9 +12,20 @@ module.exports =
       description: 'Flag missing/unnecessary dependencies'
       category: 'Possible Errors'
       recommended: yes
-    schema: []
+    schema: [
+      type: 'object'
+      properties:
+        effects:
+          type: 'boolean'
+      additionalProperties: no
+    ]
 
   create: (context) ->
+    {effects = yes} = context.options[0] ? {}
+
+    helperNames = ['addProps', 'addHandlers', 'addStateHandlers']
+    helperNames = [...helperNames, 'addEffect', 'addLayoutEffect'] if effects
+
     reportUnused = (node) ->
       context.report {
         node

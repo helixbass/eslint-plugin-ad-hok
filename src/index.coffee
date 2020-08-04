@@ -18,9 +18,8 @@ rules = do flow(
 )
 
 sharedRecommendRules =
-  'ad-hok/needs-flowmax': 'error'
-  'ad-hok/prefer-flowmax': ['error', 'whenUsingUnknownHelpers']
   'ad-hok/no-flowmax-in-forwardref': 'error'
+  'ad-hok/dependencies': ['error', {effects: no}]
 
 module.exports = {
   rules
