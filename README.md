@@ -26,19 +26,25 @@ yan add --dev eslint-plugin-ad-hok
 
 Use the [`recommended` preset](#recommended) to get reasonable defaults:
 ```
+"plugins": ["ad-hok"],
 "extends": [
-  "ad-hok/recommended"
+  "plugin:ad-hok/recommended"
 ]
 ```
+
+Or, if you're using Typescript, use the [`recommended-typescript` preset](#recommended-typescript) to get reasonable defaults
+for Typescript + React projects:
+```
+"plugins": ["ad-hok"],
+"extends": [
+  "plugin:ad-hok/recommended-typescript"
+]
+```
+
 You may also optionally specify settings that will be shared across all the plugin rules.
 ```
 "settings": {
-  "ad-hok/possibly-magic-helper-regex": "add.*|suppress.*", // defaults to "add.*"
-  "ad-hok/nonmagic-helper-whitelist": [
-    "addTranslationHelpers",
-    "addEffectOnMount"
-  ],
-  "ad-hok/should-fix-flow-flowmax": true, // if you're using eslint-plugin-known-imports
+  "ad-hok/should-rewrite-importable-names": true, // if you're using eslint-plugin-known-imports
 }
 ```
 
@@ -48,15 +54,8 @@ If you don't use the preset, include the rules that you wish to use:
 ```
 "plugins": ["ad-hok"],
 "rules": {
-  "ad-hok/no-unnecessary-flowmax": "error",
-  "ad-hok/needs-flowmax": "error",
-  "ad-hok/prefer-flowmax": ["error", "whenUsingUnknownHelpers"],
-  "ad-hok/no-flowmax-in-forwardref": "error"
-},
-"settings": { // these are all optional
-  "ad-hok/possibly-magic-helper-regex": ...,
-  "ad-hok/nonmagic-helper-whitelist": ...,
-  "ad-hok/should-fix-flow-flowmax": ...
+  "ad-hok/no-flowmax-in-forwardref": "error",
+  "ad-hok/dependencies": "error"
 }
 ```
 
@@ -76,6 +75,7 @@ This plugin exports a `recommended` configuration that provides reasonable defau
 To enable this configuration use the `extends` property in your `.eslintrc` config file:
 ```
 {
+  "plugins": ["ad-hok"],
   "extends": ["plugin:ad-hok/recommended"]
 }
 ```
@@ -86,6 +86,27 @@ The rules enabled in this configuration are:
 * [`ad-hok/needs-flowmax`](./docs/rules/needs-flowmax.md)
 * [`ad-hok/prefer-flowmax`](./docs/rules/prefer-flowmax.md) (specifically, `"ad-hok/prefer-flowmax": ["error", "whenUsingUnknownHelpers"]`)
 * [`ad-hok/no-flowmax-in-forwardref`](./docs/rules/no-flowmax-in-forwardref.md)
+
+### Recommended-Typescript
+
+This plugin exports a `recommended-typescript` configuration that provides reasonable defaults for enforcing `ad-hok` best practices when
+you're using Typescript
+
+To enable this configuration use the `extends` property in your `.eslintrc` config file:
+```
+{
+  "plugins": ["ad-hok"],
+  "extends": ["plugin:ad-hok/recommended-typescript"]
+}
+```
+
+The rules enabled in this configuration (in addition to the rules listed for the [`recommended`](#recommnded) preset above) are:
+
+* [`ad-hok/annotate-handler-param-types`](./docs/rules/annotate-handler-param-types.md)
+* [`ad-hok/cleanupprops-last`](./docs/rules/cleanupprops-last.md)
+
+
+
 
 ## License
 
