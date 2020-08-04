@@ -77,7 +77,12 @@ If you don't use the preset, include the rules that you wish to use:
 
 
 * [`ad-hok/no-flowmax-in-forwardref`](./docs/rules/no-flowmax-in-forwardref.md) - flag uses of `flowMax()` inside [`React.forwardRef()`](https://reactjs.org/docs/forwarding-refs.html)
+* [`ad-hok/dependencies`](./docs/rules/dependencies.md) - check that dependencies arguments match used props
+* [`ad-hok/require-adddisplayname`](./docs/rules/require-adddisplayname.md) - check that components set a display name with `addDisplayName()`
 
+Typescript-specific rules:
+* [`ad-hok/cleanupprops-last`](./docs/rules/cleanupprops-last.md) - check that `cleanupProps()` is only used at the end of ad-hok helper chains
+* [`ad-hok/annotate-handler-param-types`](./docs/rules/annotate-handler-param-types.md) - check that handler params have explicit type annotations
 
 
 ## Configuration presets
