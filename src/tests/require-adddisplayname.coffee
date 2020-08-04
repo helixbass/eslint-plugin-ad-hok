@@ -32,6 +32,15 @@ tests =
         ({b}) => <div>{b}</div>
       )
     '''
+  ,
+    # non-initial addDisplayName()
+    code: '''
+      const Component = flowMax(
+        addProps({b: 2}),
+        addDisplayName('Something'),
+        ({b}) => <div>{b}</div>
+      )
+    '''
   ]
   invalid: [
     code: '''
