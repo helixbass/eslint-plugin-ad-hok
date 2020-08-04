@@ -98,6 +98,7 @@ See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extendi
 The rules enabled in this configuration are:
 
 * [`ad-hok/no-flowmax-in-forwardref`](./docs/rules/no-flowmax-in-forwardref.md)
+* [`ad-hok/dependencies`](./docs/rules/dependencies.md) (specifically, `"ad-hok/dependencies": ["error", {"effects": false}]`)
 
 
 ### Recommended-Typescript
