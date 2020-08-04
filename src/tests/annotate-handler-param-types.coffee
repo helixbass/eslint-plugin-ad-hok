@@ -150,6 +150,18 @@ tests =
       )
     '''
     errors: [errorMissingAnnotation]
+  ,
+    filename: 'test.ts'
+    code: '''
+      flowMax(
+        addExtendedHandlers({
+          doSomething: () => (b) => {
+            b()
+          }
+        }),
+      )
+    '''
+    errors: [errorMissingAnnotation]
   ]
 
 config =
