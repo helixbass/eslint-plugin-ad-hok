@@ -64,7 +64,7 @@ getAddDisplayNameFixer = ({node}) ->
     )
 
 shouldFix = ({context: {settings}}) ->
-  !!settings['ad-hok/should-fix-flow-flowmax']
+  !!settings['ad-hok/should-fix-importable-names']
 
 isTypescript = (context) ->
   extension = path.extname context.getFilename()

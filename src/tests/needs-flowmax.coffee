@@ -77,7 +77,7 @@ tests =
         returns(() => 1)
       )
     '''
-    # don't fix unless should-fix-flow-flowmax is set
+    # don't fix unless should-fix-importable-names is set
     output: '''
       flow(
         returns(() => 1)
@@ -176,7 +176,7 @@ tests =
     '''
     errors: [error 'returns']
     settings:
-      'ad-hok/should-fix-flow-flowmax': yes
+      'ad-hok/should-fix-importable-names': yes
   ]
 
 config =
