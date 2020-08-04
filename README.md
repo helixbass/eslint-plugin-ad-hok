@@ -1,6 +1,18 @@
 # eslint-plugin-ad-hok
 [Ad-hok](https://www.github.com/helixbass/ad-hok) specific linting rules for ESLint
 
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Rules](#rules)
+- [Configuration presets](#configuration-presets)
+- [Help / Contributions / Feedback](#help--contributions--feedback)
+- [License](#license)
+
+
+
 ## Installation
 Install [ESLint](https://www.github.com/eslint/eslint)
 ```
@@ -107,7 +119,15 @@ The rules enabled in this configuration (in addition to the rules listed for the
 
 
 
+## Help / Contributions / Feedback
+
+Please file an issue or submit a PR with any questions/suggestions
+
+
 
 ## License
 
 MIT
+
+
+
