@@ -5,11 +5,19 @@
 Install [ESLint](https://www.github.com/eslint/eslint)
 ```
 npm install --save-dev eslint
+
+# or, if you're using yarn:
+
+yarn add --dev eslint
 ```
 
 Install the plugin
 ```
 npm install --save-dev eslint-plugin-ad-hok
+
+# or, if you're using yarn:
+
+yan add --dev eslint-plugin-ad-hok
 ```
 
 ## Configuration
