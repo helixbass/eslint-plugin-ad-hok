@@ -30,7 +30,9 @@ module.exports =
       context.report {
         node
         message: """
-          Unnecessary dependency "#{node.value}"
+          "#{
+          node.value
+        }" is not used so should not be included in the dependencies array
         """
       }
 
@@ -38,7 +40,7 @@ module.exports =
       context.report {
         node
         message: """
-          Missing dependency "#{name}"
+          Used prop "#{name}" is missing from the dependencies array
         """
       }
 
