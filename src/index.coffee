@@ -35,7 +35,7 @@ module.exports = {
       parserOptions:
         ecmaFeatures:
           jsx: yes
-      rules: Object.assign sharedRecommendRules,
+      rules: Object.assign {}, sharedRecommendRules,
         'ad-hok/annotate-handler-param-types': 'error'
         'ad-hok/cleanupprops-last': 'error'
 }
