@@ -5,12 +5,12 @@ ruleTester = new RuleTester()
 
 errorMissing = (name) ->
   message: """
-    Missing dependency "#{name}"
+    Used prop "#{name}" is missing from the dependencies array
   """
 
 errorUnnecessary = (name) ->
   message: """
-    Unnecessary dependency "#{name}"
+    "#{name}" is not used so should not be included in the dependencies array
   """
 
 tests =
