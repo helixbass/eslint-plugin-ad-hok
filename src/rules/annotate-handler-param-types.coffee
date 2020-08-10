@@ -33,9 +33,8 @@ module.exports =
         continue unless innerFunction.type is 'ArrowFunctionExpression'
         for param in innerFunction.params
           continue if param.typeAnnotation
-          context.report {
-            node
+          context.report
+            node: param
             message: '''
               Parameter should be annotated to avoid implicit any-typing
             '''
-          }
