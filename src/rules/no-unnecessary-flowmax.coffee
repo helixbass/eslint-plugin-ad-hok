@@ -1,7 +1,7 @@
 {
   isFlowMax
   nonmagicHelperNames
-  isFunction
+  isFunctionNode
   isBranchPure
   shouldFix
   getFlowMaxToFlowFixer
@@ -9,7 +9,7 @@
 
 isNonmagic = (node) ->
   return yes unless node?
-  return yes if isFunction node
+  return yes if isFunctionNode node
   {callee} = node
   return no unless callee?.type is 'Identifier'
   callee.name in nonmagicHelperNames

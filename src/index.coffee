@@ -9,6 +9,7 @@ ruleNames = [
   'require-adddisplayname'
   'annotate-handler-param-types'
   'cleanupprops-last'
+  'no-mutable-singleton-initial-values'
 ]
 
 rules = do flow(

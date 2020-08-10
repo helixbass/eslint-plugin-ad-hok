@@ -40,8 +40,11 @@ isNonmagicHelper = (node) ->
   return no unless node?.callee?.type is 'Identifier'
   node.callee.name in nonmagicHelperNames
 
-isFunction = (node) ->
+isFunctionNode = (node) ->
   node?.type in ['FunctionExpression', 'ArrowFunctionExpression']
+
+isUndefinedNode = (node) ->
+  node?.type is 'Identifier' and node.name is 'undefined'
 
 isBranchPure = (node) ->
   return unless node?.callee?.type is 'Identifier'
@@ -75,7 +78,7 @@ module.exports = {
   isFlow
   magicHelperNames
   nonmagicHelperNames
-  isFunction
+  isFunctionNode
   isMagic
   isNonmagicHelper
   isBranchPure
@@ -85,4 +88,5 @@ module.exports = {
   getAddDisplayNameFixer
   isTypescript
   isFlowOrFlowMax
+  isUndefinedNode
 }
