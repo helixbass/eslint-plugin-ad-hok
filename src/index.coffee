@@ -19,6 +19,7 @@ rules = do flow(
 )
 
 sharedRecommendRules =
+  'ad-hok/no-mutable-singleton-initial-values': 'error'
   'ad-hok/no-flowmax-in-forwardref': 'error'
   'ad-hok/dependencies': ['error', {effects: no}]
 
