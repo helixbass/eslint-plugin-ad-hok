@@ -7,7 +7,9 @@
   "scripts": {
     "watch": "coffee -o lib/ -wc src/",
     "build": "coffee -o lib/ -c src/",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
     "test": "node_modules/mocha/bin/_mocha lib/tests/**/*.js",
     "lint": "eslint 'src/**/*.coffee'"
   },
