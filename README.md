@@ -76,6 +76,7 @@ If you don't use the preset, include the rules that you wish to use:
 ## Rules
 
 
+* [`ad-hok/no-mutable-singleton-initial-values`](./docs/rules/no-mutable-singleton-initial-values.md) - flag potentially mutable initial values that are shared across component instances
 * [`ad-hok/no-flowmax-in-forwardref`](./docs/rules/no-flowmax-in-forwardref.md) - flag uses of `flowMax()` inside [`React.forwardRef()`](https://reactjs.org/docs/forwarding-refs.html)
 * [`ad-hok/dependencies`](./docs/rules/dependencies.md) - check that dependencies arguments match used props
 * [`ad-hok/require-adddisplayname`](./docs/rules/require-adddisplayname.md) - check that components set a display name with `addDisplayName()`
@@ -102,6 +103,7 @@ See [ESLint documentation](http://eslint.org/docs/user-guide/configuring#extendi
 
 The rules enabled in this configuration are:
 
+* [`ad-hok/no-mutable-singleton-initial-values`](./docs/rules/no-mutable-singleton-initial-values.md)
 * [`ad-hok/no-flowmax-in-forwardref`](./docs/rules/no-flowmax-in-forwardref.md)
 * [`ad-hok/dependencies`](./docs/rules/dependencies.md) (specifically, `"ad-hok/dependencies": ["error", {"effects": false}]`)
 
