@@ -9,6 +9,7 @@ ruleNames = [
   'require-adddisplayname'
   'annotate-handler-param-types'
   'cleanupprops-last'
+  'getcontexthelpers-argument'
 ]
 
 rules = do flow(
@@ -38,4 +39,5 @@ module.exports = {
       rules: Object.assign {}, sharedRecommendRules,
         'ad-hok/annotate-handler-param-types': 'error'
         'ad-hok/cleanupprops-last': 'error'
+        'ad-hok/getcontexthelpers-argument': 'error'
 }
