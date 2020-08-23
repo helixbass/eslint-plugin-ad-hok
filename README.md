@@ -83,6 +83,7 @@ If you don't use the preset, include the rules that you wish to use:
 Typescript-specific rules:
 * [`ad-hok/cleanupprops-last`](./docs/rules/cleanupprops-last.md) - check that `cleanupProps()` is only used at the end of ad-hok helper chains
 * [`ad-hok/annotate-handler-param-types`](./docs/rules/annotate-handler-param-types.md) - check that handler params have explicit type annotations
+* [`ad-hok/getcontexthelpers-argument`](./docs/rules/getcontexthelpers-argument.md) - autofix [`getContextHelpers()`](https://github.com/helixbass/ad-hok-utils#getcontexthelpers)'s argument
 
 
 ## Configuration presets
@@ -123,6 +124,7 @@ The rules enabled in this configuration (in addition to the rules listed for the
 
 * [`ad-hok/annotate-handler-param-types`](./docs/rules/annotate-handler-param-types.md)
 * [`ad-hok/cleanupprops-last`](./docs/rules/cleanupprops-last.md)
+* [`ad-hok/getcontexthelpers-argument`](./docs/rules/getcontexthelpers-argument.md)
 
 
 
