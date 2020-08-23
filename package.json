@@ -32,6 +32,7 @@
     "eslint": ">=4.14.0"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^3.9.1",
     "babel-eslint": "^10.0.1",
     "coffeescript": "^2.5.0",
     "eslint": "^7",
@@ -40,7 +41,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "mocha": "^5.2.0",
     "prettier": "github:helixbass/prettier#prettier-v2.1.0-dev.100-gitpkg",
-    "prettier-plugin-coffeescript": "^0.1.5-beta.1"
+    "prettier-plugin-coffeescript": "^0.1.5-beta.1",
+    "typescript": "^4.0.2"
   },
   "dependencies": {
     "lodash": "^4.17.15"
