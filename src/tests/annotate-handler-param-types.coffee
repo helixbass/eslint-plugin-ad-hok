@@ -79,9 +79,9 @@ tests =
     code: '''
       flowMax(
         addHandlers({
-		  onChange: ({onChange}): React.ChangeEventHandler<HTMLInputElement> => (event) => {
-			onChange(event.target.value);
-		  },
+          onChange: ({onChange}): React.ChangeEventHandler<HTMLInputElement> => (event) => {
+            onChange(event.target.value);
+          },
         }),
         addStateHandlers(
           {
