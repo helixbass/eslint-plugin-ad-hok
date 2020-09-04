@@ -73,6 +73,28 @@ tests =
         ),
       )
     '''
+  ,
+    # don't flag explicit return type on outer handler
+    filename: 'test.ts'
+    code: '''
+      flowMax(
+        addHandlers({
+		  onChange: ({onChange}): React.ChangeEventHandler<HTMLInputElement> => (event) => {
+			onChange(event.target.value);
+		  },
+        }),
+        addStateHandlers(
+          {
+            count: 0,
+          },
+          {
+            add: ({count}): ((amount: number) => void) => (amount) => ({
+              count: count + amount
+            })
+          }
+        ),
+      )
+    '''
   ]
   invalid: [
     filename: 'test.ts'
