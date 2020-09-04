@@ -29,7 +29,8 @@ module.exports =
 
       for {value: outerFunction} in handlers.properties
         continue unless outerFunction.type is 'ArrowFunctionExpression'
-        {body: innerFunction} = outerFunction
+        {body: innerFunction, returnType} = outerFunction
+        continue if returnType
         continue unless innerFunction.type is 'ArrowFunctionExpression'
         for param in innerFunction.params
           continue if param.typeAnnotation
