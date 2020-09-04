@@ -88,7 +88,7 @@ tests =
             count: 0,
           },
           {
-            add: ({count}): ((amount: number) => void) => (amount) => ({
+            add: ({count}): ((amount: number) => {count: number}) => (amount) => ({
               count: count + amount
             })
           }
