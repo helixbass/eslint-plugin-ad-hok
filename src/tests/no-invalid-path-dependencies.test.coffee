@@ -130,6 +130,25 @@ tests =
         () => null
       )
     '''
+  ,
+    # deeply nested path
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addEffect} from 'ad-hok'
+
+      const MyComponent: FC = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: {
+              baz: 'baz',
+            },
+          },
+        })),
+        addEffect(() => () => {
+        }, ['foo.bar.baz']),
+        () => null
+      )
+    '''
   ]
   invalid: [
     # simple literal path from same chain
@@ -209,6 +228,7 @@ tests =
       )
     '''
     errors: [getError 'foo.baz']
+  ,
     # TODO: path including array
     # code: '''
     #   import React, {FC} from 'react'
@@ -229,6 +249,65 @@ tests =
     #     () => null
     #   )
     # '''
+    # path argument to non-object prop type
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps} from 'ad-hok'
+
+      type AddSomething = <TProps>(props: TProps) => TProps
+
+      const addSomething: AddSomething = flowMax(
+        addProps(() => ({
+          foo: 'foo',
+        })),
+        addProps({
+          incrementA: ({a}) => () => ({
+            a: a + 1
+          }),
+        }, ['foo.baz']),
+      )
+    '''
+    errors: [getError 'foo.baz']
+  ,
+    # path argument to nonexistent prop type
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps} from 'ad-hok'
+
+      type AddSomething = <TProps>(props: TProps) => TProps
+
+      const addSomething: AddSomething = flowMax(
+        addProps(() => ({
+          foo: 'foo',
+        })),
+        addProps({
+          incrementA: ({a}) => () => ({
+            a: a + 1
+          }),
+        }, ['bar.baz']),
+      )
+    '''
+    errors: [getError 'bar.baz']
+  ,
+    # deeply nested path
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addEffect} from 'ad-hok'
+
+      const MyComponent: FC = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: {
+              baz: 'baz',
+            },
+          },
+        })),
+        addEffect(() => () => {
+        }, ['foo.bar.bazz']),
+        () => null
+      )
+    '''
+    errors: [getError 'foo.bar.bazz']
   ]
 
 ruleTester.run 'no-invalid-path-dependencies', rule, tests
