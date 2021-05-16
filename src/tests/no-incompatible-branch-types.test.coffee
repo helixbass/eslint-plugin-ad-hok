@@ -34,7 +34,7 @@ tests =
     '''
   ,
     code: '''
-	  declare namespace JSX {
+      declare namespace JSX {
         interface Element {}
       }
 
@@ -45,7 +45,7 @@ tests =
     '''
   ,
     code: '''
-	  declare namespace JSX {
+      declare namespace JSX {
         interface Element {}
       }
 
