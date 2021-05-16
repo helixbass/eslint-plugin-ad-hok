@@ -49,7 +49,7 @@ module.exports =
       return unless signature?
       returnType = typeChecker.getReturnTypeOfSignature signature
       returnTypeString = typeChecker.typeToString returnType
-      return if returnTypeString in ['null', 'Element']
+      return if returnTypeString in ['null', 'Element', 'Element | null']
 
       # tsProgram = parserServices.program
       # sourceFile = getSourceFileOfNode tsReturnsCallbackNode

@@ -43,6 +43,17 @@ tests =
         () => null
       )
     '''
+  ,
+    code: '''
+	  declare namespace JSX {
+        interface Element {}
+      }
+
+      const MyComponent: FC = flowMax(
+        branch(() => true, returns(() => true ? null : <MyComponent />)),
+        () => null
+      )
+    '''
   ]
   invalid: [
     code: '''
