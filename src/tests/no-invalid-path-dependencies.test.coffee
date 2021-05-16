@@ -21,7 +21,8 @@ tests =
   valid: [
     # simple literal path from same chain
     code: '''
-      import {flowMax, addProps} from 'ad-hok'
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addEffect} from 'ad-hok'
 
       const MyComponent: FC = flowMax(
         addProps(() => ({
@@ -34,11 +35,29 @@ tests =
         () => null
       )
     '''
+  ,
+    # non-path dependencies arg
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addEffect} from 'ad-hok'
+
+      const MyComponent: FC = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: 'bar',
+          }
+        })),
+        addEffect(() => () => {
+        }, ['foo']),
+        () => null
+      )
+    '''
   ]
   invalid: [
     # simple literal path from same chain
     code: '''
-      import {flowMax, addProps} from 'ad-hok'
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addEffect} from 'ad-hok'
 
       const MyComponent: FC = flowMax(
         addProps(() => ({
