@@ -357,6 +357,24 @@ tests =
       )
     '''
     errors: [getError 'foo.baz']
+  ,
+    # multiple dependencies
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addEffect} from 'ad-hok'
+
+      const MyComponent: FC = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: 'bar',
+          }
+        })),
+        addEffect(() => () => {
+        }, ['foo.baz', 'foo.bazz']),
+        () => null
+      )
+    '''
+    errors: [getError('foo.baz'), getError 'foo.bazz']
   ]
 
 ruleTester.run 'no-invalid-path-dependencies', rule, tests

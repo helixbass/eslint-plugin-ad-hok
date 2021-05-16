@@ -93,7 +93,7 @@ module.exports =
                 pathDependency.value
               }' is not a valid path into the props object
               """
-            return
+            break
           # console.log {foundProperty}
           currentObjectType =
             foundProperty.type ? (
