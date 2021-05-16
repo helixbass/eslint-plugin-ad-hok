@@ -149,6 +149,38 @@ tests =
         () => null
       )
     '''
+  ,
+    # addMemoBoundary()
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addMemoBoundary} from 'ad-hok'
+
+      const MyComponent: FC = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: 'bar',
+          },
+        })),
+        addMemoBoundary(['foo.bar']),
+        () => null
+      )
+    '''
+  ,
+    # addMemoBoundary() with function argument
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addMemoBoundary} from 'ad-hok'
+
+      const MyComponent: FC = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: 'bar',
+          },
+        })),
+        addMemoBoundary(() => true),
+        () => null
+      )
+    '''
   ]
   invalid: [
     # simple literal path from same chain
@@ -308,6 +340,23 @@ tests =
       )
     '''
     errors: [getError 'foo.bar.bazz']
+  ,
+    # addMemoBoundary()
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addMemoBoundary} from 'ad-hok'
+
+      const MyComponent: FC = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: 'bar',
+          },
+        })),
+        addMemoBoundary(['foo.baz']),
+        () => null
+      )
+    '''
+    errors: [getError 'foo.baz']
   ]
 
 ruleTester.run 'no-invalid-path-dependencies', rule, tests
