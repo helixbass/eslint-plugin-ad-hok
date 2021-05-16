@@ -1,5 +1,5 @@
 # ts = require 'typescript'
-{isString, includes, keys} = require 'lodash'
+{isString, includes, keys, flatMap} = require 'lodash'
 
 # getSourceFileOfNode = (tsNode) ->
 #   while tsNode and tsNode.kind isnt ts.SyntaxKind.SourceFile
@@ -41,7 +41,7 @@ module.exports =
         DEPENDENCIES_ARGUMENT_POSITIONS[callee.name]
       ]
       return unless dependenciesArg?.type is 'ArrayExpression'
-      pathDependencies = dependenciesArg.elements.flatMap (dependencyArg) ->
+      pathDependencies = flatMap dependenciesArg.elements, (dependencyArg) ->
         return [] unless dependencyArg?.type is 'Literal'
         {value: dependencyPath} = dependencyArg
         return [] unless (
