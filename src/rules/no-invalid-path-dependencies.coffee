@@ -13,6 +13,8 @@ DEPENDENCIES_ARGUMENT_POSITIONS =
   addLayoutEffect: 1
 HELPER_NAMES_WITH_DEPENDENCIES_ARGUMENT = keys DEPENDENCIES_ARGUMENT_POSITIONS
 
+NUMBER_REGEX = /^\d+$/
+
 module.exports =
   meta:
     docs:
@@ -74,6 +76,7 @@ module.exports =
         currentObjectType = propsParamType
         while pathChunks.length
           currentPathChunk = pathChunks.shift()
+          return if NUMBER_REGEX.test currentPathChunk
           foundProperty = currentObjectType.getProperty currentPathChunk
           # console.log {
           #   pathChunks

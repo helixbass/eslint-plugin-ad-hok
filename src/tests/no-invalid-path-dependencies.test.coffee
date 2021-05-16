@@ -109,6 +109,27 @@ tests =
         }, ['foo.bar']),
       )
     '''
+  ,
+    # path including array
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addEffect} from 'ad-hok'
+
+      const MyComponent: FC = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: [
+              {
+                baz: 'baz',
+              },
+            ],
+          }
+        })),
+        addEffect(() => () => {
+        }, ['foo.bar.0.baz']),
+        () => null
+      )
+    '''
   ]
   invalid: [
     # simple literal path from same chain
@@ -188,6 +209,26 @@ tests =
       )
     '''
     errors: [getError 'foo.baz']
+    # TODO: path including array
+    # code: '''
+    #   import React, {FC} from 'react'
+    #   import {flowMax, addProps, addEffect} from 'ad-hok'
+
+    #   const MyComponent: FC = flowMax(
+    #     addProps(() => ({
+    #       foo: {
+    #         bar: [
+    #           {
+    #             baz: 'baz',
+    #           },
+    #         ],
+    #       }
+    #     })),
+    #     addEffect(() => () => {
+    #     }, ['foo.bar.0.bazz']),
+    #     () => null
+    #   )
+    # '''
   ]
 
 ruleTester.run 'no-invalid-path-dependencies', rule, tests
