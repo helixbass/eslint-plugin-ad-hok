@@ -10,7 +10,7 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
-    "test": "node_modules/mocha/bin/_mocha lib/tests/**/*.js",
+    "test": "jest",
     "lint": "eslint 'src/**/*.coffee'"
   },
   "files": [
@@ -40,7 +40,6 @@
     "eslint-plugin-coffee": "^0.1.13-beta.1",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.6.3",
-    "mocha": "^5.2.0",
     "prettier": "github:helixbass/prettier#prettier-v2.1.0-dev.100-gitpkg",
     "prettier-plugin-coffeescript": "^0.1.5-beta.1",
     "typescript": "^4.0.2"
