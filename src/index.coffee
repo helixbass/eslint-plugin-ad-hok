@@ -10,6 +10,7 @@ ruleNames = [
   'annotate-handler-param-types'
   'cleanupprops-last'
   'getcontexthelpers-argument'
+  'no-incompatible-branch-types'
 ]
 
 rules = do flow(
@@ -40,4 +41,5 @@ module.exports = {
         'ad-hok/annotate-handler-param-types': 'error'
         'ad-hok/cleanupprops-last': 'error'
         'ad-hok/getcontexthelpers-argument': 'error'
+        'ad-hok/no-incompatible-branch-types': 'error'
 }
