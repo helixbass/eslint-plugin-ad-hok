@@ -1,3 +1,10 @@
+ts = require 'typescript'
+
+# getSourceFileOfNode = (tsNode) ->
+#   while node and node.kind isnt ts.SyntaxKind.SourceFile
+#     node = node.parent
+#   node
+
 module.exports =
   meta:
     docs:
@@ -17,38 +24,40 @@ module.exports =
       {callee, parent} = node
       return unless (
         callee?.type is 'Identifier' and
-        callee.name in ['renderNothing', 'returns']
+        callee.name in [### 'renderNothing', ### 'returns']
       )
 
       return unless (
         parent.type is 'CallExpression' and
         parent.callee.type is 'Identifier' and
-        parent.callee.name in ['branch', 'branchPure']
+        parent.callee.name in ['branch' ### , 'branchPure'###]
       )
 
-      isReturns = callee.name is 'returns'
-      if isReturns
-        {arguments: [returnsCallbackNode]} = node
-        return unless returnsCallbackNode?
+      {arguments: [returnsCallbackNode]} = node
+      return unless returnsCallbackNode?
 
-        tsReturnsCallbackNode = parserServices.esTreeNodeToTSNodeMap.get(
-          returnsCallbackNode
-        )
-        tsReturnsCallbackType = typeChecker.getTypeAtLocation(
-          tsReturnsCallbackNode
-        )
-        [signature] = typeChecker.getSignaturesOfType(
-          tsReturnsCallbackType
-          0 ### ts.SignatureKind.Call ###
-        )
-        return unless signature?
-        returnType = typeChecker.getReturnTypeOfSignature signature
+      tsReturnsCallbackNode = parserServices.esTreeNodeToTSNodeMap.get(
+        returnsCallbackNode
+      )
+      tsReturnsCallbackType = typeChecker.getTypeAtLocation(
+        tsReturnsCallbackNode
+      )
+      [signature] = typeChecker.getSignaturesOfType(
+        tsReturnsCallbackType
+        ts.SignatureKind.Call
+      )
+      return unless signature?
+      returnType = typeChecker.getReturnTypeOfSignature signature
+      returnTypeString = typeChecker.typeToString returnType
+      return if returnTypeString in ['null', 'Element']
 
-        console.log {returnType}
+      # tsProgram = parserServices.program
+      # sourceFile = getSourceFileOfNode tsReturnsCallbackNode
+      # diagnostics = tsProgram.getSemanticDiagnostics sourceFile
 
       context.report {
         node
-        message: '''
-          cleanupProps() is type-unsafe unless last in chain, consider removeProps()
-        '''
+        message: """
+          Return type '#{returnTypeString}' is incompatible with flowMax() return type 'ReactElement<any, any> | null'
+        """
       }

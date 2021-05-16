@@ -22,20 +22,24 @@ tests =
     code: '''
       const MyComponent: FC = flowMax(
         branch(() => true, renderNothing()),
-        () => <div />
+        () => <MyComponent />
       )
     '''
   ,
     code: '''
       const MyComponent: FC = flowMax(
         branch(() => true, returns(() => null)),
-        () => <div />
+        () => <MyComponent />
       )
     '''
   ,
     code: '''
+	  declare namespace JSX {
+        interface Element {}
+      }
+
       const MyComponent: FC = flowMax(
-        branch(() => true, returns(() => <div />)),
+        branch(() => true, returns(() => <MyComponent />)),
         () => null
       )
     '''
@@ -44,7 +48,7 @@ tests =
     code: '''
       const MyComponent: FC = flowMax(
         branch(() => true, returns(() => 3)),
-        () => <div />
+        () => <MyComponent />
       )
     '''
     errors: [getError 'number']
