@@ -1,10 +1,18 @@
 # ts = require 'typescript'
-{isString, includes} = require 'lodash'
+{isString, includes, keys} = require 'lodash'
 
 # getSourceFileOfNode = (tsNode) ->
 #   while tsNode and tsNode.kind isnt ts.SyntaxKind.SourceFile
 #     tsNode = tsNode.parent
 #   tsNode
+
+DEPENDENCIES_ARGUMENT_POSITIONS =
+  addProps: 1
+  addHandlers: 1
+  addStateHandlers: 2
+  addEffect: 1
+  addLayoutEffect: 1
+HELPER_NAMES_WITH_DEPENDENCIES_ARGUMENT = keys DEPENDENCIES_ARGUMENT_POSITIONS
 
 module.exports =
   meta:
@@ -24,9 +32,12 @@ module.exports =
     CallExpression: (node) ->
       {callee} = node
       return unless (
-        callee?.type is 'Identifier' and callee.name in ['addEffect']
+        callee?.type is 'Identifier' and
+        callee.name in HELPER_NAMES_WITH_DEPENDENCIES_ARGUMENT
       )
-      {arguments: [, dependenciesArg]} = node
+      dependenciesArg = node.arguments[
+        DEPENDENCIES_ARGUMENT_POSITIONS[callee.name]
+      ]
       return unless dependenciesArg?.type is 'ArrayExpression'
       pathDependencies = dependenciesArg.elements.flatMap (dependencyArg) ->
         return [] unless dependencyArg?.type is 'Literal'
@@ -34,7 +45,7 @@ module.exports =
         return [] unless (
           isString(dependencyPath) and includes dependencyPath, '.'
         )
-        [dependencyPath]
+        [dependencyArg]
       # console.log {pathDependencies}
       return unless pathDependencies.length
 
@@ -60,7 +71,7 @@ module.exports =
         )
         # console.log {propsParamType}
         return unless propsParamType?
-        pathChunks = pathDependency.split '.'
+        pathChunks = pathDependency.value.split '.'
         currentObjectType = propsParamType
         while pathChunks.length
           currentPathChunk = pathChunks.shift()
@@ -72,12 +83,13 @@ module.exports =
           #   currentPathChunk
           # }
           unless foundProperty?
-            context.report {
-              node
+            context.report
+              node: pathDependency
               message: """
-                '#{pathDependency}' is not a valid path into the props object
+                '#{
+                pathDependency.value
+              }' is not a valid path into the props object
               """
-            }
             return
           # console.log {foundProperty}
           currentObjectType =
