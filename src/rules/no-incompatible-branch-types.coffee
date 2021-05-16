@@ -1,5 +1,3 @@
-{isTypescript} = require '../util'
-
 module.exports =
   meta:
     docs:
@@ -10,10 +8,10 @@ module.exports =
     schema: []
 
   create: (context) ->
-    return {} unless isTypescript context
-
     {parserServices} = context
     return {} unless parserServices?.hasFullTypeInformation
+
+    typeChecker = parserServices.program.getTypeChecker()
 
     CallExpression: (node) ->
       {callee, parent} = node
@@ -27,6 +25,26 @@ module.exports =
         parent.callee.type is 'Identifier' and
         parent.callee.name in ['branch', 'branchPure']
       )
+
+      isReturns = callee.name is 'returns'
+      if isReturns
+        {arguments: [returnsCallbackNode]} = node
+        return unless returnsCallbackNode?
+
+        tsReturnsCallbackNode = parserServices.esTreeNodeToTSNodeMap.get(
+          returnsCallbackNode
+        )
+        tsReturnsCallbackType = typeChecker.getTypeAtLocation(
+          tsReturnsCallbackNode
+        )
+        [signature] = typeChecker.getSignaturesOfType(
+          tsReturnsCallbackType
+          0 ### ts.SignatureKind.Call ###
+        )
+        return unless signature?
+        returnType = typeChecker.getReturnTypeOfSignature signature
+
+        console.log {returnType}
 
       context.report {
         node
