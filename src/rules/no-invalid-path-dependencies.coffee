@@ -9,7 +9,6 @@
 DEPENDENCIES_ARGUMENT_POSITIONS =
   addProps: 1
   addHandlers: 1
-  addStateHandlers: 2
   addEffect: 1
   addLayoutEffect: 1
 HELPER_NAMES_WITH_DEPENDENCIES_ARGUMENT = keys DEPENDENCIES_ARGUMENT_POSITIONS

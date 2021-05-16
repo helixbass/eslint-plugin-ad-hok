@@ -52,6 +52,63 @@ tests =
         () => null
       )
     '''
+  ,
+    # incoming prop type on component chain
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addEffect} from 'ad-hok'
+
+      interface Props {
+        foo: {
+          bar: string
+        }
+      }
+
+      const MyComponent: FC<Props> = flowMax(
+        addEffect(() => () => {
+        }, ['foo.bar']),
+        () => null
+      )
+    '''
+  ,
+    # incoming prop type on ad-hok helper chain
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addHandlers} from 'ad-hok'
+
+      type AddSomething = <TProps extends {
+        foo: {
+          bar: string
+        }
+      }>(props: TProps) => TProps
+
+      const addSomething: AddSomething = flowMax(
+        addHandlers({
+          doSomething: () => () => {},
+        }, ['foo.bar']),
+      )
+    '''
+  ,
+    # locally added prop type on ad-hok helper chain
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps} from 'ad-hok'
+
+      type AddSomething = <TProps>(props: TProps) => TProps
+
+      const addSomething: AddSomething = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: 'bar',
+          },
+        })),
+        addProps({
+          incrementA: ({a}) => () => ({
+            a: a + 1
+          }),
+        }, ['foo.bar']),
+      )
+    '''
   ]
   invalid: [
     # simple literal path from same chain
@@ -68,6 +125,66 @@ tests =
         addEffect(() => () => {
         }, ['foo.baz']),
         () => null
+      )
+    '''
+    errors: [getError 'foo.baz']
+  ,
+    # incoming prop type on component chain
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addLayoutEffect} from 'ad-hok'
+
+      interface Props {
+        foo: {
+          bar: string
+        }
+      }
+
+      const MyComponent: FC<Props> = flowMax(
+        addLayoutEffect(() => () => {
+        }, ['foo.baz']),
+        () => null
+      )
+    '''
+    errors: [getError 'foo.baz']
+  ,
+    # incoming prop type on ad-hok helper chain
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps, addHandlers} from 'ad-hok'
+
+      type AddSomething = <TProps extends {
+        foo: {
+          bar: string
+        }
+      }>(props: TProps) => TProps
+
+      const addSomething: AddSomething = flowMax(
+        addHandlers({
+          doSomething: () => () => {},
+        }, ['foo.baz']),
+      )
+    '''
+    errors: [getError 'foo.baz']
+  ,
+    # locally added prop type on ad-hok helper chain
+    code: '''
+      import React, {FC} from 'react'
+      import {flowMax, addProps} from 'ad-hok'
+
+      type AddSomething = <TProps>(props: TProps) => TProps
+
+      const addSomething: AddSomething = flowMax(
+        addProps(() => ({
+          foo: {
+            bar: 'bar',
+          },
+        })),
+        addProps({
+          incrementA: ({a}) => () => ({
+            a: a + 1
+          }),
+        }, ['foo.baz']),
       )
     '''
     errors: [getError 'foo.baz']
