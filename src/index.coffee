@@ -11,6 +11,7 @@ ruleNames = [
   'cleanupprops-last'
   'getcontexthelpers-argument'
   'no-incompatible-branch-types'
+  'no-invalid-path-dependencies'
 ]
 
 rules = do flow(
@@ -42,4 +43,5 @@ module.exports = {
         'ad-hok/cleanupprops-last': 'error'
         'ad-hok/getcontexthelpers-argument': 'error'
         'ad-hok/no-incompatible-branch-types': 'error'
+        'ad-hok/no-invalid-path-dependencies': 'error'
 }
